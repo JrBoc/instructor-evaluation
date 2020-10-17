@@ -20,5 +20,10 @@ Route::middleware('auth')->group(function() {
         Route::get('/roles', [Admin\System\RoleController::class, 'index'])->name('role.index');
         Route::post('/roles/table', [Admin\System\RoleController::class, 'table'])->name('role.table');
     });
+
+    Route::prefix('/evaluation')->name('evaluation.')->group(function() {
+        Route::get('/instructor', [Admin\Evaluation\InstructorController::class, 'index'])->name('instructor.index');
+        Route::post('/instructor/table', [Admin\Evaluation\InstructorController::class, 'table'])->name('instructor.table');
+    });
 });
 

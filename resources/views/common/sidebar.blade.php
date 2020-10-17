@@ -18,6 +18,13 @@
                         <span>Dashboard</span>
                     </a>
                 </div>
+                <div class="nav-lavel">Evaluation</div>
+                <div class="nav-item" :class="{'active' : '{{ route('admin.evaluation.instructor.index') }}' == url }">
+                    <a href="{{ route('admin.evaluation.instructor.index') }}">
+                        <i class="ik ik-users"></i>
+                        <span>Instructors</span>
+                    </a>
+                </div>
                 <div class="nav-lavel">System</div>
                 <div class="nav-item has-sub"
                     :class="{

@@ -15,24 +15,26 @@ trait LivewireForm
 
     public function validate($rules = null, $messages = [], $attributes = [])
     {
-        [$rules, $messages] = $this->providedOrGlobalRulesAndMessages($rules, $messages ?? $this->validate_messages);
+        [$rules, $messages, $attributes] = $this->providedOrGlobalRulesMessagesAndAttributes($rules, $messages ?? $this->validate_messages, $attributes ?? $this->validate_attributes);
 
         $data = $this->prepareForValidation(
             $this->getDataForValidation($rules)
         );
 
-        $validator = Validator::make($data, $rules, $messages, $attributes ?? $this->validate_attributes);
+        $validator = Validator::make($data, $rules, $messages, $attributes);
 
         $this->shortenModelAttributes($data, $rules, $validator);
 
         if ($validator->fails()) {
             $this->emit('closeDialogBox');
 
-            $validator->validate();
+            return $validator->validate();
         }
+
+        $validatedData = $validator->validate();
 
         $this->resetErrorBag();
 
-        return $validator->validated();
+        return $validatedData;
     }
 }
