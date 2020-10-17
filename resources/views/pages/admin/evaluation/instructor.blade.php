@@ -31,9 +31,11 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header d-block text-right">
+                @can('instructor.create')
                 <a class="btn btn-outline-primary" data-toggle="modal" href="#mdl_create" type="button">
                     <i class="ik ik-plus"></i> CREATE INSTRUCTOR
                 </a>
+                @endcan
             </div>
             <div class="card-body">
                 <form id="frm_search" class="form-inline mb-5" x-data="searchFilter()" x-on:submit.prevent="filter()">
@@ -84,7 +86,9 @@
                 <h6 class="modal-title">Create Instructor</h6>
             </div>
             <div class="modal-body">
+                @can('instructor.create')
                 @livewire('admin.evaluation.instructor.create')
+                @endcan
             </div>
         </div>
     </div>
@@ -137,7 +141,7 @@
         }
     }
 
-    $(function() {
+    $(function () {
         dt_users = $('#dt_instructors').DataTable({
             processing: true,
             serverSide: true,
@@ -180,5 +184,6 @@
             dt_users.ajax.reload(null, false);
         });
     });
+
 </script>
 @endpush

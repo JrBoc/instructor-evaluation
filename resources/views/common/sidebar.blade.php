@@ -19,12 +19,14 @@
                     </a>
                 </div>
                 <div class="nav-lavel">Evaluation</div>
+                @can('instructor.access')
                 <div class="nav-item" :class="{'active' : '{{ route('admin.evaluation.instructor.index') }}' == url }">
                     <a href="{{ route('admin.evaluation.instructor.index') }}">
                         <i class="ik ik-users"></i>
                         <span>Instructors</span>
                     </a>
                 </div>
+                @endcan
                 <div class="nav-lavel">System</div>
                 <div class="nav-item has-sub"
                     :class="{
@@ -34,25 +36,25 @@
                             '{{ route('admin.system.permission.index') }}'
                         ].includes(url)
                     }">
-                <a class="cursor-hand">
-                    <i class="ik ik-sliders"></i>
-                    <span>System</span>
-                </a>
-                <div class="submenu-content">
-                    <a href="{{ route('admin.system.user.index') }}" :class="{'active' : '{{ route('admin.system.user.index') }}' == url }" class="menu-item">
-                        <i class="ik ik-users"></i>
-                        <span>Users</span>
+                    <a class="cursor-hand">
+                        <i class="ik ik-sliders"></i>
+                        <span>System</span>
                     </a>
-                    <a href="{{ route('admin.system.role.index') }}" :class="{'active' : '{{ route('admin.system.role.index') }}' == url }" class="menu-item">
-                        <i class="ik ik-user-check"></i>
-                        <span>Roles</span>
-                    </a>
-                    <a href="{{ route('admin.system.permission.index') }}" :class="{'active' : '{{ route('admin.system.permission.index') }}' == url }" class="menu-item">
-                        <i class="ik ik-shield"></i>
-                        <span>Permissions</span>
-                    </a>
+                    <div class="submenu-content">
+                        <a href="{{ route('admin.system.user.index') }}" :class="{'active' : '{{ route('admin.system.user.index') }}' == url }" class="menu-item">
+                            <i class="ik ik-users"></i>
+                            <span>Users</span>
+                        </a>
+                        <a href="{{ route('admin.system.role.index') }}" :class="{'active' : '{{ route('admin.system.role.index') }}' == url }" class="menu-item">
+                            <i class="ik ik-user-check"></i>
+                            <span>Roles</span>
+                        </a>
+                        <a href="{{ route('admin.system.permission.index') }}" :class="{'active' : '{{ route('admin.system.permission.index') }}' == url }" class="menu-item">
+                            <i class="ik ik-shield"></i>
+                            <span>Permissions</span>
+                        </a>
+                    </div>
                 </div>
-            </div>
 
                 {{-- <div class="nav-lavel">Forms</div>
                 <div class="nav-item">

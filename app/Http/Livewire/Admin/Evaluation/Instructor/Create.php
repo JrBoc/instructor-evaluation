@@ -4,11 +4,12 @@ namespace App\Http\Livewire\Admin\Evaluation\Instructor;
 
 use App\Http\Livewire\LivewireForm;
 use App\Models\Instructor;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class Create extends Component
 {
-    use LivewireForm;
+    use LivewireForm, AuthorizesRequests;
 
     public $title = '';
     public $last_name = '';
@@ -23,6 +24,8 @@ class Create extends Component
 
     public function store()
     {
+        $this->authorize('permission:instructor.create');
+
         $validated_data = $this->validate([
             'title' => 'required|string',
             'last_name' => 'required|string',

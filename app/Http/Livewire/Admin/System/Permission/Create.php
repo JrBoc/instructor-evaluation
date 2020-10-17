@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\System\Permission;
 
 use App\Http\Livewire\LivewireForm;
 use App\Models\Permission;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class Create extends Component

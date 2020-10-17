@@ -21537,6 +21537,14 @@ Livewire.onError(function (status_code) {
       });
       return false;
 
+    case 403:
+      SwalMessage.fire({
+        icon: 'error',
+        title: 'Unauthorized Action',
+        text: 'You did something your not allowed too.'
+      });
+      return false;
+
     default:
       return true;
   }
@@ -21680,7 +21688,7 @@ try {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\laragon\www\themekit-8\resources\js\login.js */"./resources/js/login.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\instructor-evaluation\resources\js\login.js */"./resources/js/login.js");
 
 
 /***/ })

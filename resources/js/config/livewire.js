@@ -72,6 +72,14 @@ Livewire.onError(function(status_code) {
             });
 
             return false;
+        case 403:
+            SwalMessage.fire({
+                icon: 'error',
+                title: 'Unauthorized Action',
+                text: 'You did something your not allowed too.',
+            });
+
+            return false;
         default:
             return true;
     }

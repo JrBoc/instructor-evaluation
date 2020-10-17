@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class InstructorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:instructor.access');
+    }
+
     public function index()
     {
         return view('pages.admin.evaluation.instructor');
@@ -51,10 +56,17 @@ class InstructorController extends Controller
                 }
             })
             ->addColumn('btn', function ($instructor) {
-                return
-                    '<button data-toggle="tooltip" title="View" type="button" class="btn btn-icon btn-view mr-2 border-dark" value="' . $instructor->id . '"><i class="ik ik-edit"></i></button>' .
-                    '<button data-toggle="tooltip" title="Edit" type="button" class="btn btn-outline-primary btn-icon btn-edit mr-2" value="' . $instructor->id . '"><i class="ik ik-edit"></i></button>' .
-                    '<button data-toggle="tooltip" title="Delete" type="button" class="btn btn-outline-danger btn-icon btn-delete" value="' . $instructor->id . '"><i class="ik ik-trash"></i></button>';
+                $btn = '<button data-toggle="tooltip" title="View" type="button" class="btn btn-icon btn-view mr-2 border-dark" value="' . $instructor->id . '"><i class="ik ik-eye"></i></button>';
+
+                if (auth()->user()->can('instructor.edit')) {
+                    $btn .= '<button data-toggle="tooltip" title="Edit" type="button" class="btn btn-outline-primary btn-icon btn-edit mr-2" value="' . $instructor->id . '"><i class="ik ik-edit"></i></button>';
+                }
+
+                if (auth()->user()->can('instructor.delete')) {
+                    $btn .= '<button data-toggle="tooltip" title="Delete" type="button" class="btn btn-outline-danger btn-icon btn-delete" value="' . $instructor->id . '"><i class="ik ik-trash"></i></button>';
+                }
+
+                return $btn;
             })
             ->rawColumns(['btn', 'html_status'])
             ->toJson();
