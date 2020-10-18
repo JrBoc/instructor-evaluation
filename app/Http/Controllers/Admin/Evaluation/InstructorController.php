@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin\Evaluation;
 
-use App\Http\Controllers\Controller;
 use App\Models\Instructor;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class InstructorController extends Controller
 {
@@ -36,6 +36,10 @@ class InstructorController extends Controller
                     4 => 'first_name',
                     5 => 'middle_name',
                 ];
+
+                if (!is_null($form['status'])) {
+                    $q->where('status', $form['status']);
+                }
 
                 if (!is_null($form['search']) && isset($columns[$form['column']])) {
                     if (is_array($columns[$form['column']])) {
