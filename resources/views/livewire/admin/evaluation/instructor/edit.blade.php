@@ -2,8 +2,8 @@
     <div class="col-12">
         <form action="#" x-on:submit.prevent="update()">
             <div class="form-group">
-                <label>Title: <span class="text-red">*</span></label>
-                <select wire:model.defer="title" class="form-control @error('title') is-invalid @enderror">
+                <label>Title: {!! $editable ? '<span class="text-red">*</span>' : '' !!}</label>
+                <select wire:model.defer="title" class="form-control @error('title') is-invalid @enderror" {{ !$editable ? 'disabled="disabled"' : '' }}>
                     <option value="">-- Select Title --</option>
                     <option value="Mr.">Mr.</option>
                     <option value="Ms.">Ms.</option>
@@ -12,23 +12,23 @@
                 @include('inc.invalid-feedback', ['name' => 'title'])
             </div>
             <div class="form-group">
-                <label>Last Name: <span class="text-red">*</span></label>
-                <input wire:model.defer="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" placeholder="Last Name">
+                <label>Last Name: {!! $editable ? '<span class="text-red">*</span>' : '' !!}</label>
+                <input wire:model.defer="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" placeholder="Last Name" {{ !$editable ? 'disabled="disabled"' : '' }}>
                 @include('inc.invalid-feedback', ['name' => 'last_name'])
             </div>
             <div class="form-group">
-                <label>First Name: <span class="text-red">*</span></label>
-                <input wire:model.defer="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" placeholder="First Name">
+                <label>First Name: {!! $editable ? '<span class="text-red">*</span>' : '' !!}</label>
+                <input wire:model.defer="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" placeholder="First Name" {{ !$editable ? 'disabled="disabled"' : '' }}>
                 @include('inc.invalid-feedback', ['name' => 'first_name'])
             </div>
             <div class="form-group">
                 <label>Middle Name:</label>
-                <input wire:model.defer="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" placeholder="Middle Name">
+                <input wire:model.defer="middle_name" type="text" class="form-control @error('middle_name') is-invalid @enderror" placeholder="Middle Name" {{ !$editable ? 'disabled="disabled"' : '' }}>
                 @include('inc.invalid-feedback', ['name' => 'middle_name'])
             </div>
             <div class="form-group">
-                <label>Status: <span class="text-red">*</span></label>
-                <select wire:model.defer="status" class="form-control @error('status') is-invalid @enderror">
+                <label>Status: {!! $editable ? '<span class="text-red">*</span>' : '' !!}</label>
+                <select wire:model.defer="status" class="form-control @error('status') is-invalid @enderror" {{ !$editable ? 'disabled="disabled"' : '' }}>
                     <option value="1">Active</option>
                     <option value="0">Inactive</option>
                 </select>
@@ -46,7 +46,7 @@
 <script>
     function edit() {
         return {
-            editable: @entangle('editable')
+            editable: @entangle('editable'),
             update() {
                 SwalConfirm.fire({
                     text: 'Are you sure you want to update this instructor?',

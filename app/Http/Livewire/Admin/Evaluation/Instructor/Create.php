@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire\Admin\Evaluation\Instructor;
 
-use App\Http\Livewire\LivewireForm;
-use App\Models\Instructor;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
+use App\Models\Instructor;
+use App\Http\Livewire\LivewireForm;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Create extends Component
 {
