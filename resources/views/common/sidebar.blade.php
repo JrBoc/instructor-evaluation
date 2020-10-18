@@ -27,6 +27,14 @@
                     </a>
                 </div>
                 @endcan
+                @can('subject.access')
+                <div class="nav-item" :class="{'active' : '{{ route('admin.evaluation.subject.index') }}' == url }">
+                    <a href="{{ route('admin.evaluation.subject.index') }}">
+                        <i class="ik ik-book"></i>
+                        <span>Subjects</span>
+                    </a>
+                </div>
+                @endcan
                 <div class="nav-lavel">System</div>
                 <div class="nav-item has-sub"
                     :class="{

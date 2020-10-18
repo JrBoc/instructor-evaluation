@@ -29,8 +29,8 @@
             <div class="widget-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="state">
-                        <h6>Title 1</h6>
-                        <h2>Subtitle 1</h2>
+                        <h6>Instructors</h6>
+                        <h2>{{ $instructors }}</h2>
                     </div>
                     <div class="icon">
                         <i class="ik ik-users"></i>

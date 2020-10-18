@@ -22,8 +22,11 @@ Route::middleware('auth')->group(function() {
     });
 
     Route::prefix('/evaluation')->name('evaluation.')->group(function() {
-        Route::get('/instructor', [Admin\Evaluation\InstructorController::class, 'index'])->name('instructor.index');
-        Route::post('/instructor/table', [Admin\Evaluation\InstructorController::class, 'table'])->name('instructor.table');
+        Route::get('/instructors', [Admin\Evaluation\InstructorController::class, 'index'])->name('instructor.index');
+        Route::post('/instructors/table', [Admin\Evaluation\InstructorController::class, 'table'])->name('instructor.table');
+
+        Route::get('/subjects', [Admin\Evaluation\SubjectController::class, 'index'])->name('subject.index');
+        Route::post('/subjects/table', [Admin\Evaluation\SubjectController::class, 'table'])->name('subject.table');
     });
 });
 

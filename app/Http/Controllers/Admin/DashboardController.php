@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Instructor;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        return view('pages.admin.dashboard');
+        return view('pages.admin.dashboard', [
+            'instructors' => number_format(Instructor::count()),
+        ]);
     }
 }
