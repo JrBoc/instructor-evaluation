@@ -19,6 +19,14 @@
                     </a>
                 </div>
                 <div class="nav-lavel">Evaluation</div>
+                @can('class.access')
+                <div class="nav-item" :class="{'active' : '{{ route('admin.evaluation.section.index') }}' == url }">
+                    <a href="{{ route('admin.evaluation.section.index') }}">
+                        <i class="ik ik-clipboard"></i>
+                        <span>Classes</span>
+                    </a>
+                </div>
+                @endcan
                 @can('instructor.access')
                 <div class="nav-item" :class="{'active' : '{{ route('admin.evaluation.instructor.index') }}' == url }">
                     <a href="{{ route('admin.evaluation.instructor.index') }}">

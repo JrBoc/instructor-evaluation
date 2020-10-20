@@ -5,22 +5,29 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Instructor extends Model
+class Section extends Model
 {
     use HasFactory;
 
-    protected $table = 'eval_instructors';
-
+    protected $table = 'eval_sections';
     protected $guarded = [];
-
     protected $appends = [
-        'html_status',
-        'formatted_full_name',
+        'html_status'
     ];
 
-    public function getFormattedFullNameAttribute()
+    public function first_semester_assignments()
     {
-        return $this->title . ' ' . strtoupper($this->last_name) . ', ' . strtoupper($this->first_name) . (($this->middle_name) ? ' ' . substr($this->middle_name, 0, 1) . '.' : '');
+        return $this->hasMany(SectionAssignment::class, 'section_id', 'id')->where('semester', 1);
+    }
+
+    public function second_semester_assignments()
+    {
+        return $this->hasMany(SectionAssignment::class, 'section_id', 'id')->where('semester', 2);
+    }
+
+    public function assignments()
+    {
+        return $this->hasMany(SectionAssignment::class, 'section_id', 'id');
     }
 
     public function getHtmlStatusAttribute()

@@ -27,6 +27,9 @@ Route::middleware('auth')->group(function() {
 
         Route::get('/subjects', [Admin\Evaluation\SubjectController::class, 'index'])->name('subject.index');
         Route::post('/subjects/table', [Admin\Evaluation\SubjectController::class, 'table'])->name('subject.table');
+
+        Route::get('/classes', [Admin\Evaluation\SectionController::class, 'index'])->name('section.index');
+        Route::post('/classes/table', [Admin\Evaluation\SectionController::class, 'table'])->name('section.table');
     });
 });
 
