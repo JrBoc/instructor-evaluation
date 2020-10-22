@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Evaluation\Section;
+namespace App\Http\Livewire\Admin\School\Section;
 
 use App\Models\Section;
 use App\Models\Subject;
@@ -27,7 +27,7 @@ class Create extends Component
 
     public function render()
     {
-        return view('livewire.admin.evaluation.section.create', [
+        return view('livewire.admin.school.section.create', [
             'stored_subjects' => Subject::query()->where('grade', $this->grade)->get(),
             'stored_instructors' =>  Instructor::all(),
         ]);

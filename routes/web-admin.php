@@ -21,15 +21,18 @@ Route::middleware('auth')->group(function() {
         Route::post('/roles/table', [Admin\System\RoleController::class, 'table'])->name('role.table');
     });
 
-    Route::prefix('/evaluation')->name('evaluation.')->group(function() {
-        Route::get('/instructors', [Admin\Evaluation\InstructorController::class, 'index'])->name('instructor.index');
-        Route::post('/instructors/table', [Admin\Evaluation\InstructorController::class, 'table'])->name('instructor.table');
+    Route::prefix('/school')->name('school.')->group(function() {
+        Route::get('/instructors', [Admin\School\InstructorController::class, 'index'])->name('instructor.index');
+        Route::post('/instructors/table', [Admin\School\InstructorController::class, 'table'])->name('instructor.table');
 
-        Route::get('/subjects', [Admin\Evaluation\SubjectController::class, 'index'])->name('subject.index');
-        Route::post('/subjects/table', [Admin\Evaluation\SubjectController::class, 'table'])->name('subject.table');
+        Route::get('/subjects', [Admin\School\SubjectController::class, 'index'])->name('subject.index');
+        Route::post('/subjects/table', [Admin\School\SubjectController::class, 'table'])->name('subject.table');
 
-        Route::get('/classes', [Admin\Evaluation\SectionController::class, 'index'])->name('section.index');
-        Route::post('/classes/table', [Admin\Evaluation\SectionController::class, 'table'])->name('section.table');
+        Route::get('/classes', [Admin\School\SectionController::class, 'index'])->name('section.index');
+        Route::post('/classes/table', [Admin\School\SectionController::class, 'table'])->name('section.table');
+
+        Route::get('/students', [Admin\School\StudentController::class, 'index'])->name('student.index');
+        Route::post('/students/table', [Admin\School\StudentController::class, 'table'])->name('student.table');
     });
 });
 

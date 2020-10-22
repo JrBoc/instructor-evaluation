@@ -19,7 +19,7 @@
                         <a href="#dashboard"><i class="ik ik-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
-                        Evaluation
+                        School
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">Subjects</li>
                 </ol>
@@ -42,13 +42,13 @@
                     <label class="mr-2">
                         Search:
                     </label>
-                    <select x-model="grade" class="form-control mr-2" style="min-width: 100px" data-toggle="tooltip" title="Status Filter">
+                    <select x-model="grade" class="form-control mr-2" data-toggle="tooltip" title="Status Filter">
                         <option value="">All Grades</option>
                         @foreach(config('evaluation.grades') as $grade)
                         <option value="{{ $grade }}">Grade {{ $grade}}</option>
                         @endforeach
                     </select>
-                    <select x-model="column" class="form-control mr-2" data-toggle="tooltip" style="min-width: 100px" title="Column Filter">
+                    <select x-model="column" class="form-control mr-2" data-toggle="tooltip" title="Column Filter">
                         <option value="1">ID</option>
                         <option value="2">SUBJECT</option>
                     </select>
@@ -83,7 +83,7 @@
             </div>
             <div class="modal-body">
                 @can('subject.create')
-                @livewire('admin.evaluation.subject.create')
+                @livewire('admin.school.subject.create')
                 @endcan
             </div>
         </div>
@@ -96,7 +96,7 @@
                 <h6 class="modal-title">Edit Instructor</h6>
             </div>
             <div class="modal-body">
-                @livewire('admin.evaluation.subject.edit')
+                @livewire('admin.school.subject.edit')
             </div>
         </div>
     </div>
@@ -144,7 +144,7 @@ $(function () {
         processing: true,
         serverSide: true,
         ajax: {
-            url: '{{ route("admin.evaluation.subject.table") }}',
+            url: '{{ route("admin.school.subject.table") }}',
             method: 'post',
             data: function (d) {
                 d.form = frm_search;

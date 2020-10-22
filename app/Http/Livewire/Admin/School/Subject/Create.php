@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Evaluation\Subject;
+namespace App\Http\Livewire\Admin\School\Subject;
 
 use App\Models\Subject;
 use Livewire\Component;
@@ -17,7 +17,7 @@ class Create extends Component
 
     public function render()
     {
-        return view('livewire.admin.evaluation.subject.create');
+        return view('livewire.admin.school.subject.create');
     }
 
     public function store()

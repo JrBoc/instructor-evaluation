@@ -64060,6 +64060,16 @@ Livewire.on('msg', function (msg) {
     icon: status ? 'success' : 'error'
   });
 });
+Livewire.on('errorMsg', function (message) {
+  $('.modal').modal('hide');
+  SwalConfirm.close();
+  SwalLoading.close();
+  SwalMessage.fire({
+    title: message.title,
+    text: message.message,
+    icon: 'error'
+  });
+});
 Livewire.on('closeDialogBox', function () {
   SwalLoading.close();
 });

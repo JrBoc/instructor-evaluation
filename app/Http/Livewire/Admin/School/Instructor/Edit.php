@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Evaluation\Instructor;
+namespace App\Http\Livewire\Admin\School\Instructor;
 
 use Livewire\Component;
 use App\Models\Instructor;
@@ -21,7 +21,7 @@ class Edit extends Component
 
     public function render()
     {
-        return view('livewire.admin.evaluation.instructor.edit');
+        return view('livewire.admin.school.instructor.edit');
     }
 
     public function get(Instructor $instructor, $editable = false)

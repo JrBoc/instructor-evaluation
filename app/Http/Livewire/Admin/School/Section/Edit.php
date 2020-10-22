@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Evaluation\Section;
+namespace App\Http\Livewire\Admin\School\Section;
 
 use App\Models\Section;
 use App\Models\Subject;
@@ -28,7 +28,7 @@ class Edit extends Component
 
     public function render()
     {
-        return view('livewire.admin.evaluation.section.edit', [
+        return view('livewire.admin.school.section.edit', [
             'stored_subjects' => Subject::query()->where('grade', $this->grade)->get(),
             'stored_instructors' =>  Instructor::all(),
         ]);

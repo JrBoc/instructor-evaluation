@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Evaluation;
+namespace App\Http\Controllers\Admin\School;
 
 use App\Models\Section;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class SectionController extends Controller
 
     public function index()
     {
-        return view('pages.admin.evaluation.section');
+        return view('pages.admin.school.section');
     }
 
     public function table(Request $request)

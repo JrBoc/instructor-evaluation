@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Evaluation\Instructor;
+namespace App\Http\Livewire\Admin\School\Instructor;
 
 use Livewire\Component;
 use App\Models\Instructor;
@@ -19,14 +19,14 @@ class Create extends Component
 
     public function render()
     {
-        return view('livewire.admin.evaluation.instructor.create');
+        return view('livewire.admin.school.instructor.create');
     }
 
     public function store()
     {
         $this->authorize('permission:instructor.create');
 
-        $validated_data = $this->validate([
+        $data = $this->validate([
             'title' => 'required|string',
             'last_name' => 'required|string',
             'first_name' => 'required|string',
@@ -34,7 +34,7 @@ class Create extends Component
             'status' => 'nullable|boolean',
         ]);
 
-        Instructor::create($validated_data);
+        Instructor::create($data);
 
         $this->clear();
 

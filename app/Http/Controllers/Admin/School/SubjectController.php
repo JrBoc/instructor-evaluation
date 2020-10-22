@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Evaluation;
+namespace App\Http\Controllers\Admin\School;
 
 use App\Models\Subject;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class SubjectController extends Controller
 
     public function index()
     {
-        return view('pages.admin.evaluation.subject');
+        return view('pages.admin.school.subject');
     }
 
     public function table(Request $request)

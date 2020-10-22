@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Evaluation;
+namespace App\Http\Controllers\Admin\School;
 
-use App\Models\Instructor;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class InstructorController extends Controller
+class StudentController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:instructor.access');
+        $this->middleware('permission:student.access');
     }
 
     public function index()
     {
-        return view('pages.admin.evaluation.instructor');
+        return view('pages.admin.school.student');
     }
 
     public function table(Request $request)
@@ -27,11 +27,11 @@ class InstructorController extends Controller
         ];
 
         return datatables()
-            ->eloquent(Instructor::query())
+            ->eloquent(Student::query()->with('section'))
             ->filter(function ($q) use ($form) {
                 $columns = [
                     1 => 'id',
-                    2 => 'last_name',
+                    2 => 'student_id',
                     3 => 'last_name',
                     4 => 'first_name',
                     5 => 'middle_name',
@@ -59,15 +59,15 @@ class InstructorController extends Controller
                     }
                 }
             })
-            ->addColumn('btn', function ($instructor) {
-                $btn = '<button data-toggle="tooltip" title="View" type="button" class="btn btn-icon btn-view mr-2 border-dark" value="' . $instructor->id . '"><i class="ik ik-eye"></i></button>';
+            ->addColumn('btn', function ($student) {
+                $btn = '<button data-toggle="tooltip" title="View" type="button" class="btn btn-icon btn-view mr-2 border-dark" value="' . $student->id . '"><i class="ik ik-eye"></i></button>';
 
                 if (auth()->user()->can('instructor.edit')) {
-                    $btn .= '<button data-toggle="tooltip" title="Edit" type="button" class="btn btn-outline-primary btn-icon btn-edit mr-2" value="' . $instructor->id . '"><i class="ik ik-edit"></i></button>';
+                    $btn .= '<button data-toggle="tooltip" title="Edit" type="button" class="btn btn-outline-primary btn-icon btn-edit mr-2" value="' . $student->id . '"><i class="ik ik-edit"></i></button>';
                 }
 
                 if (auth()->user()->can('instructor.delete')) {
-                    $btn .= '<button data-toggle="tooltip" title="Delete" type="button" class="btn btn-outline-danger btn-icon btn-delete" value="' . $instructor->id . '"><i class="ik ik-trash"></i></button>';
+                    $btn .= '<button data-toggle="tooltip" title="Delete" type="button" class="btn btn-outline-danger btn-icon btn-delete" value="' . $student->id . '"><i class="ik ik-trash"></i></button>';
                 }
 
                 return $btn;

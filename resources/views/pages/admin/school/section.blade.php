@@ -7,8 +7,8 @@
             <div class="page-header-title">
                 <i class="ik ik-users bg-dark"></i>
                 <div class="d-inline">
-                    <h5>Instructors</h5>
-                    <span>Manage Instructors</span>
+                    <h5>Classes</h5>
+                    <span>Manage Classes</span>
                 </div>
             </div>
         </div>
@@ -19,9 +19,9 @@
                         <a href="#dashboard"><i class="ik ik-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
-                        Evaluation
+                        School
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Instructors</li>
+                    <li class="breadcrumb-item active" aria-current="page">Classes</li>
                 </ol>
             </nav>
         </div>
@@ -31,9 +31,9 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header d-block text-right">
-                @can('instructor.create')
+                @can('class.create')
                 <a class="btn btn-outline-primary" data-toggle="modal" href="#mdl_create" type="button">
-                    <i class="ik ik-plus"></i> CREATE INSTRUCTOR
+                    <i class="ik ik-plus"></i> CREATE CLASS
                 </a>
                 @endcan
             </div>
@@ -42,12 +42,18 @@
                     <label class="mr-2">
                         Search:
                     </label>
-                    <select x-model="status" class="form-control mr-2" style="min-width: 100px" data-toggle="tooltip" title="Status Filter">
+                    <select x-model="status" class="form-control mr-2" data-toggle="tooltip" title="Status Filter">
                         <option value="">All Status</option>
                         <option value="1">Active</option>
                         <option value="0">Inactive</option>
                     </select>
-                    <select x-model="column" class="form-control mr-2" data-toggle="tooltip" style="min-width: 100px" title="Column Filter">
+                    <select x-model="grade" class="form-control mr-2"  data-toggle="tooltip" title="Status Filter">
+                        <option value="">All Grades</option>
+                        @foreach(config('evaluation.grades') as $grade)
+                        <option value="{{ $grade }}">Grade {{ $grade}}</option>
+                        @endforeach
+                    </select>
+                    <select x-model="column" class="form-control mr-2" data-toggle="tooltip" title="Column Filter">
                         <option value="1">ID</option>
                         <option value="2">LAST NAME</option>
                         <option value="2">FIRST NAME</option>
@@ -62,14 +68,14 @@
                     <button x-show.transition="isClean()" type="button" class="btn text-red ik ik-x rounded-0" x-on:click="reset()" data-toggle="tooltip" title="Reset" style="padding-bottom: 26px"></button>
                 </form>
                 <!--  -->
-                <table id="dt_instructors" class="table table-hover border-bottom table-responsive" style="width: 100%;">
+                <table id="dt_classes" class="table table-hover border-bottom table-responsive" style="width: 100%;">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>TITLE</th>
-                            <th>LAST NAME</th>
-                            <th>FIRST NAME</th>
-                            <th>MIDDLE NAME</th>
+                            <th>NAME</th>
+                            <th>GRADE</th>
+                            <th>1ST SEM</th>
+                            <th>2ND SEM</th>
                             <th>STATUS</th>
                             <th class="w-1"></th>
                         </tr>
@@ -83,12 +89,10 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content border-0">
             <div class="modal-header">
-                <h6 class="modal-title">Create Instructor</h6>
+                <h6 class="modal-title">Create Class</h6>
             </div>
             <div class="modal-body">
-                @can('instructor.create')
-                @livewire('admin.evaluation.instructor.create')
-                @endcan
+                @livewire('admin.school.section.create')
             </div>
         </div>
     </div>
@@ -97,10 +101,10 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content border-0">
             <div class="modal-header">
-                <h6 class="modal-title">Edit Instructor</h6>
+                <h6 class="modal-title">Edit Class</h6>
             </div>
             <div class="modal-body">
-                @livewire('admin.evaluation.instructor.edit')
+                @livewire('admin.school.section.edit')
             </div>
         </div>
     </div>
@@ -109,7 +113,7 @@
 
 @push('scripts')
 <script>
-    let dt_users;
+    let dt_classes;
     let frm_search = {};
 
     function searchFilter() {
@@ -117,17 +121,19 @@
             search: '',
             column: 1,
             status: '',
+            grade: '',
             filter() {
                 frm_search = {
                     column: this.column,
                     search: this.search,
                     status: this.status,
+                    grade: this.grade,
                 };
 
-                dt_users.ajax.reload();
+                dt_classes.ajax.reload();
             },
             isClean() {
-                if (this.column != 1 || this.search.length || this.status != '') {
+                if (this.column != 1 || this.search.length || this.status != '' || this.grade != '') {
                     return true;
                 }
 
@@ -137,16 +143,19 @@
                 this.column = 1;
                 this.search = '';
                 this.status = '';
+                this.grade = '';
+
+                this.filter();
             }
         }
     }
 
     $(function () {
-        dt_users = $('#dt_instructors').DataTable({
+        dt_classes = $('#dt_classes').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
-                url: '{{ route("admin.evaluation.instructor.table") }}',
+                url: '{{ route("admin.school.section.table") }}',
                 method: 'post',
                 data: function (d) {
                     d.form = frm_search;
@@ -157,17 +166,20 @@
                 name: 'id',
                 className: 'dt-body-right',
             }, {
-                data: 'title',
-                name: 'title'
+                data: 'name',
+                name: 'name'
             }, {
-                data: 'last_name',
-                name: 'last_name',
+                data: 'grade',
+                name: 'grade',
+                className: 'dt-body-right',
             }, {
-                data: 'first_name',
-                name: 'first_name',
+                data: 'first_semester_assignments',
+                name: 'first_semester_assignments',
+                className: 'w-1',
             }, {
-                data: 'middle_name',
-                name: 'middle_name',
+                data: 'second_semester_assignments',
+                name: 'second_semester_assignments',
+                className: 'w-1',
             }, {
                 data: 'html_status',
                 name: 'html_status',
@@ -181,7 +193,7 @@
         });
 
         Livewire.on('tableRefresh', () => {
-            dt_users.ajax.reload(null, false);
+            dt_classes.ajax.reload(null, false);
         });
     });
 

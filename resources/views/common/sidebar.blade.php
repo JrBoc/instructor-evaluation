@@ -1,6 +1,6 @@
 <div class="app-sidebar colored">
     <div class="sidebar-header">
-        <a class="header-brand" href="index.html">
+        <a class="header-brand" href="{{ route('admin.dashboard') }}">
             <div class="logo-img">
                 <i class="header-brand-img ik ik-code pl-5"></i>
             </div>
@@ -19,25 +19,52 @@
                     </a>
                 </div>
                 <div class="nav-lavel">Evaluation</div>
+                <div class="nav-item" :class="{'active' : '#' == url }">
+                    <a href="#">
+                        <i class="ik ik-calendar"></i>
+                        <span>Scheduling</span>
+                    </a>
+                </div>
+                <div class="nav-item" :class="{'active' : '#' == url }">
+                    <a href="#">
+                        <i class="ik ik-check-square"></i>
+                        <span>Questionnaire</span>
+                    </a>
+                </div>
+                <div class="nav-item" :class="{'active' : '#' == url }">
+                    <a href="#">
+                        <i class="ik ik-file-text"></i>
+                        <span>Reports</span>
+                    </a>
+                </div>
+                <div class="nav-lavel">School</div>
+                @can('student.access')
+                <div class="nav-item" :class="{'active' : '{{ route('admin.school.student.index') }}' == url }">
+                    <a href="{{ route('admin.school.student.index') }}">
+                        <i class="ik ik-users"></i>
+                        <span>Students</span>
+                    </a>
+                </div>
+                @endcan
                 @can('class.access')
-                <div class="nav-item" :class="{'active' : '{{ route('admin.evaluation.section.index') }}' == url }">
-                    <a href="{{ route('admin.evaluation.section.index') }}">
+                <div class="nav-item" :class="{'active' : '{{ route('admin.school.section.index') }}' == url }">
+                    <a href="{{ route('admin.school.section.index') }}">
                         <i class="ik ik-clipboard"></i>
                         <span>Classes</span>
                     </a>
                 </div>
                 @endcan
                 @can('instructor.access')
-                <div class="nav-item" :class="{'active' : '{{ route('admin.evaluation.instructor.index') }}' == url }">
-                    <a href="{{ route('admin.evaluation.instructor.index') }}">
+                <div class="nav-item" :class="{'active' : '{{ route('admin.school.instructor.index') }}' == url }">
+                    <a href="{{ route('admin.school.instructor.index') }}">
                         <i class="ik ik-users"></i>
                         <span>Instructors</span>
                     </a>
                 </div>
                 @endcan
                 @can('subject.access')
-                <div class="nav-item" :class="{'active' : '{{ route('admin.evaluation.subject.index') }}' == url }">
-                    <a href="{{ route('admin.evaluation.subject.index') }}">
+                <div class="nav-item" :class="{'active' : '{{ route('admin.school.subject.index') }}' == url }">
+                    <a href="{{ route('admin.school.subject.index') }}">
                         <i class="ik ik-book"></i>
                         <span>Subjects</span>
                     </a>

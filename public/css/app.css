@@ -31022,3 +31022,8 @@ body {
   cursor: pointer;
 }
 
+select.form-control,
+select.paginate_input {
+  padding-right: 40px;
+}
+
