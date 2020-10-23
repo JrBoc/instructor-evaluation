@@ -7,10 +7,11 @@ use App\Models\Subject;
 use Livewire\Component;
 use App\Models\Instructor;
 use App\Http\Livewire\LivewireForm;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Edit extends Component
 {
-    use LivewireForm;
+    use LivewireForm, AuthorizesRequests;
 
     public $section;
     public $name = '';

@@ -100,7 +100,7 @@
                 <h6 class="modal-title">Edit Student</h6>
             </div>
             <div class="modal-body">
-                @livewire('admin.school.instructor.edit')
+                @livewire('admin.school.student.edit')
             </div>
         </div>
     </div>

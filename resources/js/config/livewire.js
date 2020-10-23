@@ -71,7 +71,8 @@ Livewire.onError(function(status_code) {
         case 404:
             SwalMessage.fire({
                 icon: 'error',
-                title: 'Selected Resource Not Found'
+                title: '404',
+                text: 'Selected Resource Not Found'
             });
 
             return false;
