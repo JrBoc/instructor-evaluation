@@ -19,12 +19,14 @@
                     </a>
                 </div>
                 <div class="nav-lavel">Evaluation</div>
-                <div class="nav-item" :class="{'active' : '#' == url }">
-                    <a href="#">
+                @can('schedule.access')
+                <div class="nav-item" :class="{'active' : '{{ route('admin.evaluation.schedule.index') }}' == url }">
+                    <a href="{{ route('admin.evaluation.schedule.index') }}">
                         <i class="ik ik-calendar"></i>
-                        <span>Scheduling</span>
+                        <span>Schedules</span>
                     </a>
                 </div>
+                @endcan
                 <div class="nav-item" :class="{'active' : '#' == url }">
                     <a href="#">
                         <i class="ik ik-check-square"></i>

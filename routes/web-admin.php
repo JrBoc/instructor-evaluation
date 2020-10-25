@@ -34,5 +34,10 @@ Route::middleware('auth')->group(function() {
         Route::get('/students', [Admin\School\StudentController::class, 'index'])->name('student.index');
         Route::post('/students/table', [Admin\School\StudentController::class, 'table'])->name('student.table');
     });
+
+    Route::prefix('/evaluation')->name('evaluation.')->group(function() {
+        Route::get('/schedules', [Admin\Evaluation\ScheduleController::class, 'index'])->name('schedule.index');
+        Route::post('/schedules/table', [Admin\Evaluation\ScheduleController::class, 'table'])->name('schedule.table');
+    });
 });
 

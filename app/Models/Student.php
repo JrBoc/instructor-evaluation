@@ -5,6 +5,35 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Student
+ *
+ * @property int $id
+ * @property string $student_id
+ * @property string $last_name
+ * @property string $first_name
+ * @property string|null $middle_name
+ * @property string $password
+ * @property int $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read mixed $html_status
+ * @property-read \App\Models\Section|null $section
+ * @property-read \App\Models\StudentSection|null $student_section
+ * @method static \Illuminate\Database\Eloquent\Builder|Student newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Student newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Student query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Student whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Student whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Student whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Student whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Student whereMiddleName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Student wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Student whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Student whereStudentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Student whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Student extends Model
 {
     use HasFactory;
