@@ -64638,8 +64638,8 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default.a.fn.removeNumeric = function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\instructor-evaluation\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\instructor-evaluation\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\tes\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\tes\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

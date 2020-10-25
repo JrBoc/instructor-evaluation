@@ -2,9 +2,8 @@
 
 namespace App\Http\Livewire\Admin\Profile;
 
-use App\Http\Livewire\LivewireForm;
-use App\Models\User;
 use Livewire\Component;
+use App\Http\Livewire\LivewireForm;
 
 class Edit extends Component
 {

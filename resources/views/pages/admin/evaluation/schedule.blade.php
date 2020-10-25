@@ -33,7 +33,7 @@
             <div class="card-header d-block text-right">
                 @can('instructor.create')
                 <a class="btn btn-outline-primary" data-toggle="modal" href="#mdl_create" type="button">
-                    <i class="ik ik-plus"></i> CREATE EVALUATION
+                    <i class="ik ik-plus"></i> CREATE SCHEDULE
                 </a>
                 @endcan
             </div>
@@ -60,11 +60,13 @@
                         <tr>
                             <th>ID</th>
                             <th>SCHOOL YEAR</th>
+                            <th>SEMESTER</th>
+                            <th>GRADE</th>
+                            <th>CLASS</th>
+                            <th>TYPE</th>
                             <th>DATE</th>
                             <th>START TIME</th>
                             <th>END TIME</th>
-                            <th>GRADE</th>
-                            <th>CLASS</th>
                             <th>STATUS</th>
                             <th class="w-1"></th>
                         </tr>
@@ -75,10 +77,10 @@
     </div>
 </div>
 <div class="modal fade" id="mdl_create" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content border-0">
             <div class="modal-header">
-                <h6 class="modal-title">Create Student</h6>
+                <h6 class="modal-title">Create Schedule</h6>
             </div>
             <div class="modal-body">
                 @livewire('admin.evaluation.schedule.create')
@@ -90,7 +92,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content border-0">
             <div class="modal-header">
-                <h6 class="modal-title">Edit Student</h6>
+                <h6 class="modal-title">Edit Schedule</h6>
             </div>
             <div class="modal-body">
                 @livewire('admin.school.student.edit')
@@ -155,14 +157,8 @@
                 data: 'readable_school_year',
                 name: 'readable_school_year'
             }, {
-                data: 'date',
-                name: 'date',
-            }, {
-                data: 'start',
-                name: 'star',
-            }, {
-                data: 'end',
-                name: 'end',
+                data: 'semester',
+                name: 'semester',
             }, {
                 data: 'section.grade',
                 name: 'section.grade',
@@ -172,6 +168,35 @@
                 data: 'section.name',
                 name: 'section.name',
                 orderable: false,
+            }, {
+                data: 'whole_day',
+                name: 'whole_day',
+                render: function (whole_day) {
+                    return !whole_day ? 'TIMED' : 'OPEN'
+                }
+            }, {
+                data: 'date',
+                name: 'date',
+            }, {
+                data: 'start',
+                name: 'start',
+                render: function (time, t, row) {
+                    if (row.whole_day) {
+                        return 'WHOLE DAY'
+                    }
+
+                    return time;
+                }
+            }, {
+                data: 'end',
+                name: 'end',
+                render: function (time, t, row) {
+                    if (row.whole_day) {
+                        return 'WHOLE DAY'
+                    }
+
+                    return time;
+                }
             }, {
                 data: 'html_status',
                 name: 'html_status',
