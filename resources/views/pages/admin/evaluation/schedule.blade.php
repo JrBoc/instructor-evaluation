@@ -30,48 +30,63 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <div class="card-header d-block text-right">
+            <div class="card-header d-block text-right border-bottom-0">
                 @can('instructor.create')
                 <a class="btn btn-outline-primary" data-toggle="modal" href="#mdl_create" type="button">
                     <i class="ik ik-plus"></i> CREATE SCHEDULE
                 </a>
                 @endcan
             </div>
+            <ul class="nav nav-tabs nav-fill" id="schedule_tabs" role="tablist">
+                <li class="nav-item border-top-0 pl-10">
+                    <a class="nav-link active" href="#ongoing" data-toggle="tab" role="tab">Ongoing</a>
+                </li>
+                <li class="nav-item pr-10">
+                    <a class="nav-link" href="#past" data-toggle="tab" role="tab">Past Schedules</a>
+                </li>
+            </ul>
             <div class="card-body">
-                <form id="frm_search" class="form-inline mb-5" x-data="searchFilter()" x-on:submit.prevent="filter()">
-                    <label class="mr-2">
-                        Search:
-                    </label>
-                    <select x-model="status" class="form-control mr-2" data-toggle="tooltip" title="Status Filter">
-                        <option value="">All Status</option>
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
-                    </select>
-                    <span class="input-group mb-0 mr-2">
-                        <input x-model="search" type="text" class="form-control" placeholder="Search">
-                        <div class="input-group-append">
-                            <button type="button" x-on:click="filter()" class="btn btn-light ik ik-search border border-gray-800" data-toggle="tooltip" title="Search"></button>
-                        </div>
-                    </span>
-                    <button x-show.transition="isClean()" type="button" class="btn text-red ik ik-x rounded-0" x-on:click="reset()" data-toggle="tooltip" title="Reset" style="padding-bottom: 26px"></button>
-                </form>
-                <table id="dt_schedules" class="table table-hover border-bottom table-responsive" style="width: 100%;">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>SCHOOL YEAR</th>
-                            <th>SEMESTER</th>
-                            <th>GRADE</th>
-                            <th>CLASS</th>
-                            <th>TYPE</th>
-                            <th>DATE</th>
-                            <th>START TIME</th>
-                            <th>END TIME</th>
-                            <th>STATUS</th>
-                            <th class="w-1"></th>
-                        </tr>
-                    </thead>
-                </table>
+                <div class="tab-content mt-3">
+                    <div id="ongoing" class="tab-pane active" role="tabpanel">
+                        <form id="frm_search" class="form-inline mb-5" x-data="searchFilter()" x-on:submit.prevent="filter()">
+                            <label class="mr-2">
+                                Search:
+                            </label>
+                            <select x-model="status" class="form-control mr-2" data-toggle="tooltip" title="Status Filter">
+                                <option value="">All Status</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                            <span class="input-group mb-0 mr-2">
+                                <input x-model="search" type="text" class="form-control" placeholder="Search">
+                                <div class="input-group-append">
+                                    <button type="button" x-on:click="filter()" class="btn btn-light ik ik-search border border-gray-800" data-toggle="tooltip" title="Search"></button>
+                                </div>
+                            </span>
+                            <button x-show.transition="isClean()" type="button" class="btn text-red ik ik-x rounded-0" x-on:click="reset()" data-toggle="tooltip" title="Reset" style="padding-bottom: 26px"></button>
+                        </form>
+                        <table id="dt_schedules" class="table table-hover border-bottom table-responsive" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>SCHOOL YEAR</th>
+                                    <th>SEMESTER</th>
+                                    <th>GRADE</th>
+                                    <th>CLASS</th>
+                                    <th>TYPE</th>
+                                    <th>DATE</th>
+                                    <th>START TIME</th>
+                                    <th>END TIME</th>
+                                    <th>STATUS</th>
+                                    <th class="w-1"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div id="past" class="tab-pane fade" role="tabpanel">
+                        asdqweqw
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -155,9 +170,9 @@
                 className: 'dt-body-right',
             }, {
                 data: 'readable_school_year',
-                name: 'readable_school_year'
+                name: 'school_year'
             }, {
-                data: 'semester',
+                data: 'readable_semester',
                 name: 'semester',
             }, {
                 data: 'section.grade',

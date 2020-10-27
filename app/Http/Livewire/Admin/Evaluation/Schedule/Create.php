@@ -2,11 +2,11 @@
 
 namespace App\Http\Livewire\Admin\Evaluation\Schedule;
 
-use App\Http\Livewire\LivewireForm;
-use App\Models\Schedule;
 use App\Models\Section;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use App\Models\Schedule;
+use Illuminate\Support\Facades\DB;
+use App\Http\Livewire\LivewireForm;
 
 class Create extends Component
 {

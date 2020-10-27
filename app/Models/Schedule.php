@@ -38,6 +38,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Schedule whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Schedule whereWholeDay($value)
  * @mixin \Eloquent
+ * @property-read mixed $readable_semester
  */
 class Schedule extends Model
 {
@@ -50,6 +51,7 @@ class Schedule extends Model
     protected $appends = [
         'html_status',
         'readable_school_year',
+        'readable_semester',
     ];
 
     protected $casts = [
@@ -64,6 +66,14 @@ class Schedule extends Model
             0 => '<label class="badge badge-secondary mb-0">Inactive</label>',
             1 => '<label class="badge badge-success mb-0">Active</label>'
         ][$this->status] ?? '<label class="badge badge-danger mb-0">Unknown Status: ' . $this->status . '</label>';
+    }
+
+    public function getReadableSemesterAttribute()
+    {
+        return [
+            1 => '1st Semester',
+            2 => '2nd Semester',
+        ][$this->semester] ?? 'Unknown Semester: ' . $this->semester;
     }
 
     public function getReadableSchoolYearAttribute()
