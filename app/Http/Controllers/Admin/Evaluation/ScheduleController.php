@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Evaluation;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ScheduleController extends Controller
 {
@@ -21,8 +22,12 @@ class ScheduleController extends Controller
             'column' => $request->form['column'] ?? null,
         ];
 
+        $schedules = Schedule::query()
+            ->with('section')
+            ->where('date', Carbon::now()->format('Y-m-d'));
+
         return datatables()
-            ->eloquent(Schedule::query()->with('section'))
+            ->eloquent($schedules)
             ->filter(function ($q) use ($form) {
                 $columns = [
                     1 => 'id',
@@ -63,6 +68,18 @@ class ScheduleController extends Controller
 
                 return $btn;
             })
+            ->rawColumns(['btn', 'html_status'])
+            ->toJson();
+    }
+
+    public function tablePastSchedule(Request $request)
+    {
+        $schedules = Schedule::query()
+            ->with('section')
+            ->where('date', '<', Carbon::now()->format('Y-m-d'));
+
+        return datatables()
+            ->eloquent($schedules)
             ->rawColumns(['btn', 'html_status'])
             ->toJson();
     }

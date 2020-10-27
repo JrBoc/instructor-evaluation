@@ -46,7 +46,7 @@
                 </li>
             </ul>
             <div class="card-body">
-                <div class="tab-content mt-3">
+                <div class="tab-content">
                     <div id="ongoing" class="tab-pane active" role="tabpanel">
                         <form id="frm_search" class="form-inline mb-5" x-data="searchFilter()" x-on:submit.prevent="filter()">
                             <label class="mr-2">
@@ -84,7 +84,25 @@
                         </table>
                     </div>
                     <div id="past" class="tab-pane fade" role="tabpanel">
-                        asdqweqw
+                        <div class="col-md-3 col-12 alert alert-info">
+                            <i class="ik ik-info"></i> Showing schedules after: {{ now()->format('M j, Y') }}.
+                        </div>
+                        <table id="dt_past_schedules" class="table table-hover border-bottom table-responsive" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>SCHOOL YEAR</th>
+                                    <th>SEMESTER</th>
+                                    <th>GRADE</th>
+                                    <th>CLASS</th>
+                                    <th>TYPE</th>
+                                    <th>DATE</th>
+                                    <th>START TIME</th>
+                                    <th>END TIME</th>
+                                    <th class="w-1">STATUS</th>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -104,13 +122,13 @@
     </div>
 </div>
 <div class="modal fade" id="mdl_edit" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content border-0">
             <div class="modal-header">
                 <h6 class="modal-title">Edit Schedule</h6>
             </div>
             <div class="modal-body">
-                @livewire('admin.school.student.edit')
+                @livewire('admin.evaluation.schedule.edit')
             </div>
         </div>
     </div>
@@ -120,6 +138,7 @@
 @push('scripts')
 <script>
     let dt_schedules;
+    let dt_past_schedules;
     let frm_search = {};
 
     function searchFilter() {
@@ -164,6 +183,9 @@
                     d.form = frm_search;
                 }
             },
+            order: [
+                [0, 'desc'],
+            ],
             columns: [{
                 data: 'id',
                 name: 'id',
@@ -221,6 +243,74 @@
                 name: 'btn',
                 className: 'dt-btn',
                 orderable: false,
+            }]
+        });
+
+        dt_past_schedules = $('#dt_past_schedules').DataTable({
+            processing: true,
+            serverSide: true,
+            order: [
+                [0, 'desc'],
+            ],
+            ajax: {
+                url: '{{ route("admin.evaluation.schedule.table-past") }}',
+                method: 'post',
+                data: function (d) {
+                    d.form = frm_search;
+                }
+            },
+            columns: [{
+                data: 'id',
+                name: 'id',
+                className: 'dt-body-right',
+            }, {
+                data: 'readable_school_year',
+                name: 'school_year'
+            }, {
+                data: 'readable_semester',
+                name: 'semester',
+            }, {
+                data: 'section.grade',
+                name: 'section.grade',
+                className: 'dt-body-right',
+                orderable: false,
+            }, {
+                data: 'section.name',
+                name: 'section.name',
+                orderable: false,
+            }, {
+                data: 'whole_day',
+                name: 'whole_day',
+                render: function (whole_day) {
+                    return !whole_day ? 'TIMED' : 'OPEN'
+                }
+            }, {
+                data: 'date',
+                name: 'date',
+            }, {
+                data: 'start',
+                name: 'start',
+                render: function (time, t, row) {
+                    if (row.whole_day) {
+                        return 'WHOLE DAY'
+                    }
+
+                    return time;
+                }
+            }, {
+                data: 'end',
+                name: 'end',
+                render: function (time, t, row) {
+                    if (row.whole_day) {
+                        return 'WHOLE DAY'
+                    }
+
+                    return time;
+                }
+            }, {
+                data: 'html_status',
+                name: 'html_status',
+                className: 'dt-btn dt-body-left w-1',
             }]
         });
 

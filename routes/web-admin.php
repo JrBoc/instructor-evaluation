@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function() {
     Route::prefix('/evaluation')->name('evaluation.')->group(function() {
         Route::get('/schedules', [Admin\Evaluation\ScheduleController::class, 'index'])->name('schedule.index');
         Route::post('/schedules/table', [Admin\Evaluation\ScheduleController::class, 'table'])->name('schedule.table');
+        Route::post('/schedules/table-past-schedules', [Admin\Evaluation\ScheduleController::class, 'tablePastSchedule'])->name('schedule.table-past');
     });
 });
 

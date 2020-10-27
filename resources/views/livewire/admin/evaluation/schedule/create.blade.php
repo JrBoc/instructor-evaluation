@@ -50,35 +50,33 @@
         <div class="col-12 col-md-6">
             <div class="form-group">
                 <label>Evaluation Type: <span class="text-red">*</span></label>
-                <select wire:model="evaluation_type" class="form-control @error('evaluation_type') is-invalid @enderror">
+                <select x-model="evaluation_type" wire:model.defer="evaluation_type" class="form-control @error('evaluation_type') is-invalid @enderror">
                     <option value="">-- Select Evaluation Type --</option>
                     <option value="OPEN">OPEN (WHOLE DAY)</option>
                     <option value="TIMED">TIMED</option>
                 </select>
                 @include('inc.invalid-feedback', ['name' => 'evaluation_type'])
             </div>
-            @if($evaluation_type)
-            <label>Schedule: <span class="text-red">*</span></label>
-            <div class="card card-body shadow-none border">
-                <div class="form-group">
-                    <label>Date: <span class="text-red">*</span></label>
-                    <input wire:model.defer="date" type="date" class="form-control @error('date') is-invalid @enderror" placeholder="Date">
-                    @include('inc.invalid-feedback', ['name' => 'date'])
+            <div x-show="evaluation_type">
+                <label>Schedule: <span class="text-red">*</span></label>
+                <div class="card card-body shadow-none border">
+                    <div class="form-group">
+                        <label>Date: <span class="text-red">*</span></label>
+                        <input wire:model.defer="date" type="date" class="form-control @error('date') is-invalid @enderror" placeholder="Date">
+                        @include('inc.invalid-feedback', ['name' => 'date'])
+                    </div>
+                    <div x-show="evaluation_type == 'TIMED'" class="form-group">
+                        <label>Start: <span class="text-red">*</span></label>
+                        <input wire:model.defer="start" type="time" class="form-control @error('start') is-invalid @enderror" placeholder="Start Time">
+                        @include('inc.invalid-feedback', ['name' => 'start'])
+                    </div>
+                    <div x-show="evaluation_type == 'TIMED'" class="form-group">
+                        <label>End: <span class="text-red">*</span></label>
+                        <input wire:model.defer="end" type="time" class="form-control @error('end') is-invalid @enderror" placeholder="End Time">
+                        @include('inc.invalid-feedback', ['name' => 'end'])
+                    </div>
                 </div>
-                @if($evaluation_type == 'TIMED')
-                <div class="form-group">
-                    <label>Start: <span class="text-red">*</span></label>
-                    <input wire:model.defer="start" type="time" class="form-control @error('start') is-invalid @enderror" placeholder="Start Time">
-                    @include('inc.invalid-feedback', ['name' => 'start'])
-                </div>
-                <div class="form-group">
-                    <label>End: <span class="text-red">*</span></label>
-                    <input wire:model.defer="end" type="time" class="form-control @error('end') is-invalid @enderror" placeholder="End Time">
-                    @include('inc.invalid-feedback', ['name' => 'end'])
-                </div>
-                @endif
             </div>
-            @endif
         </div>
         <div class="col-12">
             <div class="d-flex justify-content-between">
@@ -110,7 +108,8 @@
             },
             clear() {
                 $('#mdl_create').modal('hide');
-            }
+            },
+            evaluation_type: @entangle('evaluation_type')
         }
     }
 
