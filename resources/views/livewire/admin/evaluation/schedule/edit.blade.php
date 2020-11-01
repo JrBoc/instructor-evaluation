@@ -50,7 +50,7 @@
         <div class="col-12 col-md-6">
             <div class="form-group">
                 <label>Evaluation Type:{!! $editable ? '<span class="text-red">*</span>' : '' !!}</label>
-                <select x-model="evaluation_type" wire:model.defer="evaluation_type" class="form-control @error('evaluation_type') is-invalid @enderror" {{ !$editable ? 'disabled="disabled"' : '' }}>
+                <select wire:model.defer="evaluation_type" class="form-control @error('evaluation_type') is-invalid @enderror" {{ !$editable ? 'disabled="disabled"' : '' }}>
                     <option value="">-- Select Evaluation Type --</option>
                     <option value="OPEN">OPEN (WHOLE DAY)</option>
                     <option value="TIMED">TIMED</option>
@@ -114,41 +114,41 @@
         }
     }
 
-    $(function () {
-        $('#mdl_edit').on('hide.bs.modal', function () {
-            @this.call('clear');
-        });
+    // $(function () {
+    //     $('#mdl_edit').on('hide.bs.modal', function () {
+    //         @this.call('clear');
+    //     });
 
-        $('#dt_schedules').on('click', '.btn-view', function () {
-            SwalLoading.fire();
+    //     $('#dt_schedules').on('click', '.btn-view', function () {
+    //         SwalLoading.fire();
 
-            @this.call('get', $(this).val(), false);
-        });
+    //         @this.call('get', $(this).val(), false);
+    //     });
 
-        $('#dt_schedules').on('click', '.btn-edit', function () {
-            SwalLoading.fire();
+    //     $('#dt_schedules').on('click', '.btn-edit', function () {
+    //         SwalLoading.fire();
 
-            @this.call('get', $(this).val(), true);
-        });
+    //         @this.call('get', $(this).val(), true);
+    //     });
 
-        $('#dt_schedules').on('click', '.btn-delete', function () {
-            let id = $(this).val();
+    //     $('#dt_schedules').on('click', '.btn-delete', function () {
+    //         let id = $(this).val();
 
-            SwalConfirm.fire({
-                text: 'Are you sure you want to delete this schedule?',
-                preConfirm: function (choice) {
-                    if (choice) {
-                        @this.call('destroy', id);
-                    }
-                    return choice;
-                }
-            }).then(function (choice) {
-                if (choice.value) {
-                    SwalLoading.fire();
-                }
-            });
-        });
-    });
+    //         SwalConfirm.fire({
+    //             text: 'Are you sure you want to delete this schedule?',
+    //             preConfirm: function (choice) {
+    //                 if (choice) {
+    //                     @this.call('destroy', id);
+    //                 }
+    //                 return choice;
+    //             }
+    //         }).then(function (choice) {
+    //             if (choice.value) {
+    //                 SwalLoading.fire();
+    //             }
+    //         });
+    //     });
+    // });
 
 </script>
 @endpush

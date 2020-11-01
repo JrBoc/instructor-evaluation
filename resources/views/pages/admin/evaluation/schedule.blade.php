@@ -84,7 +84,7 @@
                         </table>
                     </div>
                     <div id="past" class="tab-pane fade" role="tabpanel">
-                        <div class="col-md-3 col-12 alert alert-info">
+                        <div class="col-12 alert alert-info">
                             <i class="ik ik-info"></i> Showing schedules after: {{ now()->format('M j, Y') }}.
                         </div>
                         <table id="dt_past_schedules" class="table table-hover border-bottom table-responsive" style="width: 100%;">
@@ -317,6 +317,14 @@
         Livewire.on('tableRefresh', () => {
             dt_schedules.ajax.reload(null, false);
         });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust();
+        });
+
+        $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust();
     });
 
 </script>

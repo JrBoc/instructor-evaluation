@@ -26,6 +26,9 @@ $('table').on('draw.dt', function() {
         boundary: 'window'
     });
 
+    $($.fn.dataTable.tables(true)).DataTable()
+        .columns.adjust();
+
     $(document)
         .find('.dataTables_paginate')
         .addClass('pagination justify-content-center justify-content-md-end');
