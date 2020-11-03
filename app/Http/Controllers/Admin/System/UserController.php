@@ -23,42 +23,27 @@ class UserController extends Controller
             'column' => $request->form['column'] ?? null,
         ];
 
-        return datatables()
-            ->eloquent(User::query()->with('roles'))
-            ->filter(function ($q) use ($form) {
-                $columns = [
-                    1 => 'id',
-                    2 => 'name',
-                    3 => 'email',
-                ];
+        $users = User::query()->with('roles');
 
+        $columns = [
+            1 => 'id',
+            2 => 'name',
+            3 => 'email',
+        ];
+
+        return datatables()
+            ->eloquent($users)
+            ->filter(function ($q) use ($form) {
                 if (!is_null($form['status'])) {
                     $q->where('status', $form['status']);
                 }
-
-                if (!is_null($form['search']) && isset($columns[$form['column']])) {
-                    if (is_array($columns[$form['column']])) {
-                        $q->whereHas($columns[$form['column']][0], function ($q) use ($form, $columns) {
-                            if (strpos($columns[$form['column']][1], '?') != false) {
-                                $q->whereRaw($columns[$form['column']][1], ['%' . $form['search'] . '%']);
-                            } else {
-                                $q->where($columns[$form['column']][1], 'LIKE', '%' . $form['search'] . '%');
-                            }
-                        });
-                    } else {
-                        if (strpos($columns[$form['column']], '?') != false) {
-                            $q->whereRaw($columns[$form['column']], '%' . $form['search'] . '%');
-                        } else {
-                            $q->where($columns[$form['column']], 'LIKE', '%' . $form['search'] . '%');
-                        }
-                    }
-                }
             })
-            ->editColumn('roles', function($user) {
+            ->searchFilter($columns, $form)
+            ->editColumn('roles', function ($user) {
                 $roles = '';
 
-                foreach($user->roles as $role) {
-                    $roles .= '<label class="badge badge-info mb-1 mb-md-0 mr-1">'. $role->name .'</label>';
+                foreach ($user->roles as $role) {
+                    $roles .= '<label class="badge badge-info mb-1 mb-md-0 mr-1">' . $role->name . '</label>';
                 }
 
                 return $roles;

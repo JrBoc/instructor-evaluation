@@ -26,36 +26,21 @@ class SubjectController extends Controller
             'grade' => $request->form['grade'] ?? null,
         ];
 
-        return datatables()
-            ->eloquent(Subject::query())
-            ->filter(function ($q) use ($form) {
-                $columns = [
-                    1 => 'id',
-                    2 => 'name',
-                ];
+        $subjects = Subject::query();
 
+        $columns = [
+            1 => 'id',
+            2 => 'name',
+        ];
+
+        return datatables()
+            ->eloquent($subjects)
+            ->filter(function ($q) use ($form) {
                 if (!is_null($form['grade'])) {
                     $q->where('grade', $form['grade']);
                 }
-
-                if (!is_null($form['search']) && isset($columns[$form['column']])) {
-                    if (is_array($columns[$form['column']])) {
-                        $q->whereHas($columns[$form['column']][0], function ($q) use ($form, $columns) {
-                            if (strpos($columns[$form['column']][1], '?') != false) {
-                                $q->whereRaw($columns[$form['column']][1], ['%' . $form['search'] . '%']);
-                            } else {
-                                $q->where($columns[$form['column']][1], 'LIKE', '%' . $form['search'] . '%');
-                            }
-                        });
-                    } else {
-                        if (strpos($columns[$form['column']], '?') != false) {
-                            $q->whereRaw($columns[$form['column']], '%' . $form['search'] . '%');
-                        } else {
-                            $q->where($columns[$form['column']], 'LIKE', '%' . $form['search'] . '%');
-                        }
-                    }
-                }
             })
+            ->searchFilter($columns, $form)
             ->addColumn('btn', function ($subject) {
                 $btn = '';
 

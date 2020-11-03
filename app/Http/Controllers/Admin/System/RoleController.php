@@ -20,32 +20,16 @@ class RoleController extends Controller
             'column' => $request->form['column'] ?? null,
         ];
 
-        return datatables()
-            ->eloquent(Role::query())
-            ->filter(function ($q) use ($form) {
-                $columns = [
-                    1 => 'id',
-                    2 => 'name',
-                ];
+        $roles = Role::query();
 
-                if (!is_null($form['search']) && isset($columns[$form['column']])) {
-                    if (is_array($columns[$form['column']])) {
-                        $q->whereHas($columns[$form['column']][0], function ($q) use ($form, $columns) {
-                            if (strpos($columns[$form['column']][1], '?') != false) {
-                                $q->whereRaw($columns[$form['column']][1], ['%' . $form['search'] . '%']);
-                            } else {
-                                $q->where($columns[$form['column']][1], 'LIKE', '%' . $form['search'] . '%');
-                            }
-                        });
-                    } else {
-                        if (strpos($columns[$form['column']], '?') != false) {
-                            $q->whereRaw($columns[$form['column']], '%' . $form['search'] . '%');
-                        } else {
-                            $q->where($columns[$form['column']], 'LIKE', '%' . $form['search'] . '%');
-                        }
-                    }
-                }
-            })
+        $columns = [
+            1 => 'id',
+            2 => 'name',
+        ];
+
+        return datatables()
+            ->eloquent($roles)
+            ->searchFilter($columns, $form)
             ->addColumn('btn', function ($role) {
                 if ($role->name == 'Super Admin') {
                     return null;

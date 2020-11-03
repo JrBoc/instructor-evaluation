@@ -27,20 +27,22 @@ class SectionController extends Controller
             'grade' => $request->form['grade'] ?? null,
         ];
 
-        return datatables()
-            ->eloquent(Section::query()
-                ->with([
-                    'first_semester_assignments.subject',
-                    'first_semester_assignments.instructor',
-                    'second_semester_assignments.subject',
-                    'second_semester_assignments.instructor'
-                ]))
-            ->filter(function ($q) use ($form) {
-                $columns = [
-                    1 => 'id',
-                    2 => 'name',
-                ];
+        $sections = Section::query()
+            ->with([
+                'first_semester_assignments.subject',
+                'first_semester_assignments.instructor',
+                'second_semester_assignments.subject',
+                'second_semester_assignments.instructor'
+            ]);
 
+        $columns = [
+            1 => 'id',
+            2 => 'name',
+        ];
+
+        return datatables()
+            ->eloquent($sections)
+            ->filter(function ($q) use ($form) {
                 if (!is_null($form['status'])) {
                     $q->where('status', $form['status']);
                 }
@@ -48,25 +50,8 @@ class SectionController extends Controller
                 if (!is_null($form['grade'])) {
                     $q->where('grade', $form['grade']);
                 }
-
-                if (!is_null($form['search']) && isset($columns[$form['column']])) {
-                    if (is_array($columns[$form['column']])) {
-                        $q->whereHas($columns[$form['column']][0], function ($q) use ($form, $columns) {
-                            if (strpos($columns[$form['column']][1], '?') != false) {
-                                $q->whereRaw($columns[$form['column']][1], ['%' . $form['search'] . '%']);
-                            } else {
-                                $q->where($columns[$form['column']][1], 'LIKE', '%' . $form['search'] . '%');
-                            }
-                        });
-                    } else {
-                        if (strpos($columns[$form['column']], '?') != false) {
-                            $q->whereRaw($columns[$form['column']], '%' . $form['search'] . '%');
-                        } else {
-                            $q->where($columns[$form['column']], 'LIKE', '%' . $form['search'] . '%');
-                        }
-                    }
-                }
             })
+            ->searchFilter($columns, $form)
             ->editColumn('first_semester_assignments', function ($class) {
                 $assignments = '';
 

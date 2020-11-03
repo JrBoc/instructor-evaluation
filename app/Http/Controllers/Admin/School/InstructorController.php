@@ -26,39 +26,24 @@ class InstructorController extends Controller
             'status' => $request->form['status'] ?? null,
         ];
 
-        return datatables()
-            ->eloquent(Instructor::query())
-            ->filter(function ($q) use ($form) {
-                $columns = [
-                    1 => 'id',
-                    2 => 'last_name',
-                    3 => 'last_name',
-                    4 => 'first_name',
-                    5 => 'middle_name',
-                ];
+        $instructors = Instructor::query();
 
+        $columns = [
+            1 => 'id',
+            2 => 'last_name',
+            3 => 'last_name',
+            4 => 'first_name',
+            5 => 'middle_name',
+        ];
+
+        return datatables()
+            ->eloquent($instructors)
+            ->filter(function ($q) use ($form) {
                 if (!is_null($form['status'])) {
                     $q->where('status', $form['status']);
                 }
-
-                if (!is_null($form['search']) && isset($columns[$form['column']])) {
-                    if (is_array($columns[$form['column']])) {
-                        $q->whereHas($columns[$form['column']][0], function ($q) use ($form, $columns) {
-                            if (strpos($columns[$form['column']][1], '?') != false) {
-                                $q->whereRaw($columns[$form['column']][1], ['%' . $form['search'] . '%']);
-                            } else {
-                                $q->where($columns[$form['column']][1], 'LIKE', '%' . $form['search'] . '%');
-                            }
-                        });
-                    } else {
-                        if (strpos($columns[$form['column']], '?') != false) {
-                            $q->whereRaw($columns[$form['column']], '%' . $form['search'] . '%');
-                        } else {
-                            $q->where($columns[$form['column']], 'LIKE', '%' . $form['search'] . '%');
-                        }
-                    }
-                }
             })
+            ->searchFilter($columns, $form)
             ->addColumn('btn', function ($instructor) {
                 $btn = '<button data-toggle="tooltip" title="View" type="button" class="btn btn-icon btn-view mr-2 border-dark" value="' . $instructor->id . '"><i class="ik ik-eye"></i></button>';
 
