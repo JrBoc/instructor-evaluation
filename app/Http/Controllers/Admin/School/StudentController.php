@@ -36,14 +36,13 @@ class StudentController extends Controller
             5 => 'middle_name',
         ];
 
+        $selectionFilter = [
+            'status' => 'status',
+        ];
+
         return datatables()
             ->eloquent($students)
-            ->filter(function ($q) use ($form) {
-                if (!is_null($form['status'])) {
-                    $q->where('status', $form['status']);
-                }
-            })
-            ->searchFilter($columns, $form)
+            ->searchFilter($columns, $form, $selectionFilter)
             ->addColumn('btn', function ($student) {
                 $btn = '<button data-toggle="tooltip" title="View" type="button" class="btn btn-icon btn-view mr-2 border-dark" value="' . $student->id . '"><i class="ik ik-eye"></i></button>';
 

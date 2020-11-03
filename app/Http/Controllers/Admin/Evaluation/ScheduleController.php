@@ -26,16 +26,17 @@ class ScheduleController extends Controller
             ->with('section')
             ->where('date', Carbon::now()->format('Y-m-d'));
 
-        $columns = [1 => 'id'];
+        $columns = [
+            1 => 'id'
+        ];
+
+        $selectionFilters = [
+            'status' => 'status',
+        ];
 
         return datatables()
             ->eloquent($schedules)
-            ->filter(function ($query) use ($form) {
-                if (!is_null($form['status'])) {
-                    $query->where('status', $form['status']);
-                }
-            })
-            ->searchFilter($columns, $form)
+            ->searchFilter($columns, $form, $selectionFilters)
             ->addColumn('btn', function ($schedule) {
                 $btn = '<button data-toggle="tooltip" title="View" type="button" class="btn btn-icon btn-view mr-2 border-dark" value="' . $schedule->id . '"><i class="ik ik-eye"></i></button>';
 

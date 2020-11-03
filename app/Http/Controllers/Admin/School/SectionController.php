@@ -40,18 +40,14 @@ class SectionController extends Controller
             2 => 'name',
         ];
 
+        $selectionFilters = [
+            'status' => 'status',
+            'grade' => 'grade',
+        ];
+
         return datatables()
             ->eloquent($sections)
-            ->filter(function ($q) use ($form) {
-                if (!is_null($form['status'])) {
-                    $q->where('status', $form['status']);
-                }
-
-                if (!is_null($form['grade'])) {
-                    $q->where('grade', $form['grade']);
-                }
-            })
-            ->searchFilter($columns, $form)
+            ->searchFilter($columns, $form, $selectionFilters)
             ->editColumn('first_semester_assignments', function ($class) {
                 $assignments = '';
 

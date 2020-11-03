@@ -36,14 +36,13 @@ class InstructorController extends Controller
             5 => 'middle_name',
         ];
 
+        $selectionFilters = [
+            'status' => 'status'
+        ];
+
         return datatables()
             ->eloquent($instructors)
-            ->filter(function ($q) use ($form) {
-                if (!is_null($form['status'])) {
-                    $q->where('status', $form['status']);
-                }
-            })
-            ->searchFilter($columns, $form)
+            ->searchFilter($columns, $form, $selectionFilters)
             ->addColumn('btn', function ($instructor) {
                 $btn = '<button data-toggle="tooltip" title="View" type="button" class="btn btn-icon btn-view mr-2 border-dark" value="' . $instructor->id . '"><i class="ik ik-eye"></i></button>';
 

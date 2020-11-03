@@ -33,14 +33,13 @@ class SubjectController extends Controller
             2 => 'name',
         ];
 
+        $selectionFilters = [
+            'grade' => 'grade',
+        ];
+
         return datatables()
             ->eloquent($subjects)
-            ->filter(function ($q) use ($form) {
-                if (!is_null($form['grade'])) {
-                    $q->where('grade', $form['grade']);
-                }
-            })
-            ->searchFilter($columns, $form)
+            ->searchFilter($columns, $form, $selectionFilters)
             ->addColumn('btn', function ($subject) {
                 $btn = '';
 
