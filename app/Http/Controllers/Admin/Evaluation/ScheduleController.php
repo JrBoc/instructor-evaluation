@@ -30,13 +30,13 @@ class ScheduleController extends Controller
             1 => 'id'
         ];
 
-        $selectionFilters = [
-            'status' => 'status',
-        ];
-
         return datatables()
             ->eloquent($schedules)
-            ->searchFilter($columns, $form, $selectionFilters)
+            ->searchFilter($columns, $form, function($query) use ($form) {
+                if (!is_null($form['status'])) {
+                    $query->where('status', $form['status']);
+                }
+            })
             ->addColumn('btn', function ($schedule) {
                 $btn = '<button data-toggle="tooltip" title="View" type="button" class="btn btn-icon btn-view mr-2 border-dark" value="' . $schedule->id . '"><i class="ik ik-eye"></i></button>';
 

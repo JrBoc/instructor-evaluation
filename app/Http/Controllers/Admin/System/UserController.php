@@ -31,13 +31,13 @@ class UserController extends Controller
             3 => 'email',
         ];
 
-        $selectionFilters = [
-            'status' => 'status',
-        ];
-
         return datatables()
             ->eloquent($users)
-            ->searchFilter($columns, $form, $selectionFilters)
+            ->searchFilter($columns, $form, function($query) use ($form) {
+                if (!is_null($form['status'])) {
+                    $query->where('status', $form['status']);
+                }
+            })
             ->editColumn('roles', function ($user) {
                 $roles = '';
 

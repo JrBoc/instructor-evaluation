@@ -24,8 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        DataTableAbstract::macro('searchFilter', function ($columns = [], $form = [], $selectionFilters = []) {
-            return $this->filter(function ($query) use ($columns, $form, $selectionFilters)  {
+        DataTableAbstract::macro('searchFilter', function ($columns = [], $form = [], callable $callback = null) {
+            return $this->filter(function ($query) use ($columns, $form, $callback)  {
                 if(!is_null($form) && !is_null($columns)) {
                     if (!is_null($form['search']) && isset($columns[$form['column']])) {
                         if (is_array($columns[$form['column']])) {
@@ -46,12 +46,8 @@ class AppServiceProvider extends ServiceProvider
                     }
                 }
 
-                if(!is_null($selectionFilters) && !is_null($form)) {
-                    foreach($selectionFilters as $columnKey => $formKey) {
-                        if (!is_null($form[$formKey])) {
-                            $query->where($columnKey, $form[$formKey]);
-                        }
-                    }
+                if(is_callable($callback)) {
+                    call_user_func($callback, $this->resolveCallbackParameter());
                 }
             });
         });
