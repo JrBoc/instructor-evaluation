@@ -26,33 +26,38 @@ $('table').on('draw.dt', function() {
         boundary: 'window'
     });
 
-    $($.fn.dataTable.tables(true)).DataTable()
+    $($.fn.dataTable.tables(true))
+        .DataTable()
         .columns.adjust();
 
     $(document)
         .find('.dataTables_paginate')
-        .addClass('pagination justify-content-center justify-content-md-end');
-
-    let spanIndex = 0;
+        .each(function(){
+            $(this).addClass('pagination justify-content-center justify-content-md-end');
+        });
 
     $(document)
         .find('.dataTables_paginate')
-        .children()
         .each(function() {
-            let span = $(this);
+            let spanIndex = 0;
+            $(this)
+                .children()
+                .each(function() {
+                    let span = $(this);
 
-            if ([2, 4, 5].includes(spanIndex)) {
-                span.addClass('pt-10');
+                    if ([2, 4, 5].includes(spanIndex)) {
+                        span.addClass('pt-10');
 
-                if (spanIndex == 5) {
-                    span.addClass('pl-1');
-                }
-            }
+                        if (spanIndex == 5) {
+                            span.addClass('pl-1');
+                        }
+                    }
 
-            if (spanIndex == 6) {
-                span.removeClass('page-item');
-            }
+                    if (spanIndex == 6) {
+                        span.removeClass('page-item');
+                    }
 
-            spanIndex++;
+                    spanIndex++;
+                });
         });
 });

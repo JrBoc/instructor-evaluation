@@ -27,12 +27,14 @@
                     </a>
                 </div>
                 @endcan
-                <div class="nav-item" :class="{'active' : '#' == url }">
-                    <a href="#">
+                @can('questionnaire.access')
+                <div class="nav-item" :class="{'active' : '{{ route('admin.evaluation.questionnaire.index') }}' == url }">
+                    <a href="{{ route('admin.evaluation.questionnaire.index') }}">
                         <i class="ik ik-check-square"></i>
                         <span>Questionnaire</span>
                     </a>
                 </div>
+                @endcan
                 <div class="nav-item" :class="{'active' : '#' == url }">
                     <a href="#">
                         <i class="ik ik-file-text"></i>

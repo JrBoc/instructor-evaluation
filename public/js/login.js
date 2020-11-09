@@ -21474,6 +21474,7 @@ $(function () {
 /***/ (function(module, exports) {
 
 // requires SWAL.js
+// requires toastr
 Livewire.on('openModal', function (mdl) {
   SwalLoading.close();
 
@@ -21559,6 +21560,15 @@ Livewire.onError(function (status_code) {
     default:
       return true;
   }
+});
+Livewire.on('toast', function (toast) {
+  $.toast({
+    heading: toast.message,
+    text: toast.type.toUpperCase(),
+    showHideTransition: 'slide',
+    icon: toast.type,
+    position: 'top-right'
+  });
 });
 
 /***/ }),

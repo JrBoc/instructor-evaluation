@@ -20,7 +20,7 @@
 // Configs
 @import "./configs/datatables.scss";
 @import "./configs/swal.scss";
-
+@import "~jquery-toast-plugin/dist/jquery.toast.min.css";
 body {
     overflow-y: scroll;
     background-color: #f6f7fb;

@@ -1,4 +1,5 @@
 // requires SWAL.js
+// requires toastr
 
 Livewire.on('openModal', function(mdl) {
     SwalLoading.close();
@@ -16,7 +17,7 @@ Livewire.on('openModal', function(mdl) {
     }
 });
 
-Livewire.on('closeModal', function(mdl) {
+Livewire.on('closeModal', function (mdl) {
     if (mdl == null) {
         return $('.modal').modal('hide');
     }
@@ -28,7 +29,7 @@ Livewire.on('closeModal', function(mdl) {
     }
 });
 
-Livewire.on('msg', function(msg) {
+Livewire.on('msg', function (msg) {
     SwalConfirm.close();
     SwalLoading.close();
 
@@ -44,7 +45,7 @@ Livewire.on('msg', function(msg) {
     });
 });
 
-Livewire.on('errorMsg', function(message) {
+Livewire.on('errorMsg', function (message) {
     $('.modal').modal('hide');
 
     SwalConfirm.close();
@@ -57,11 +58,11 @@ Livewire.on('errorMsg', function(message) {
     });
 });
 
-Livewire.on('closeDialogBox', function() {
+Livewire.on('closeDialogBox', function () {
     SwalLoading.close();
 });
 
-Livewire.onError(function(status_code) {
+Livewire.onError(function (status_code) {
     $('.modal').modal('hide');
 
     SwalConfirm.close();
@@ -77,11 +78,11 @@ Livewire.onError(function(status_code) {
 
             return false;
         case 413:
-            setTimeout(function() {
+            setTimeout(function () {
                 location.reload(true);
             }, 30000);
 
-            SwalTimeOut.fire().then(function() {
+            SwalTimeOut.fire().then(function () {
                 location.reload(true);
             });
 
@@ -90,11 +91,21 @@ Livewire.onError(function(status_code) {
             SwalMessage.fire({
                 icon: 'error',
                 title: 'Unauthorized Action',
-                text: 'You did something your not allowed too.',
+                text: 'You did something your not allowed too.'
             });
 
             return false;
         default:
             return true;
     }
+});
+
+Livewire.on('toast', function (toast) {
+    $.toast({
+        heading: toast.message,
+        text: (toast.type).toUpperCase(),
+        showHideTransition: 'slide',
+        icon: toast.type,
+        position : 'top-right'
+    });
 });

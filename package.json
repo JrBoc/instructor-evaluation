@@ -25,6 +25,7 @@
         "animate.css": "^3.7.2",
         "datatables.net-plugins": "^1.10.20",
         "jquery": "^3.5.1",
+        "jquery-toast-plugin": "^1.3.2",
         "select2": "^4.0.13",
         "sweetalert2": "^10.3.5",
         "themekit": "^2.1.0"

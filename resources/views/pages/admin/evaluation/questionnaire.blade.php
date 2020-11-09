@@ -30,25 +30,25 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <ul class="nav nav-tabs nav-fill" id="schedule_tabs" role="tablist">
+            <ul class="nav nav-tabs nav-fill mt-10" id="schedule_tabs" role="tablist">
                 <li class="nav-item border-top-0 pl-10">
                     <a class="nav-link active" href="#questions" data-toggle="tab" role="tab">Questions</a>
                 </li>
                 <li class="nav-item pr-10">
-                    <a class="nav-link" href="#category" data-toggle="tab" role="tab">Categories</a>
+                    <a class="nav-link" href="#categories" data-toggle="tab" role="tab">Categories</a>
                 </li>
             </ul>
             <div class="card-body">
                 <div class="tab-content">
-                    <div id="ongoing" class="tab-pane active" role="tabpanel">
+                    <div id="questions" class="tab-pane active" role="tabpanel">
                         <div class="d-block text-right">
-                            @can('instructor.create')
+                            @can('question.create')
                             <a class="btn btn-outline-primary" data-toggle="modal" href="#mdl_create" type="button">
                                 <i class="ik ik-plus"></i> CREATE QUESTION
                             </a>
                             @endcan
                         </div>
-                        <form id="frm_search" class="form-inline mb-5" x-data="searchFilter()" x-on:submit.prevent="filter()">
+                        <form id="frm_search_questions" class="form-inline mb-5" x-data="searchFilterQuestions()" x-on:submit.prevent="filter()">
                             <label class="mr-2">
                                 Search:
                             </label>
@@ -65,41 +65,48 @@
                             </span>
                             <button x-show.transition="isClean()" type="button" class="btn text-red ik ik-x rounded-0" x-on:click="reset()" data-toggle="tooltip" title="Reset" style="padding-bottom: 26px"></button>
                         </form>
-                        <table id="dt_schedules" class="table table-hover border-bottom table-responsive" style="width: 100%;">
-                            <thead>
+                        <table id="dt_questions" class="table table-hover border-bottom table-responsive" style="width: 100%;">
+                            <thead >
                                 <tr>
                                     <th>ID</th>
-                                    <th>SCHOOL YEAR</th>
-                                    <th>SEMESTER</th>
-                                    <th>GRADE</th>
-                                    <th>CLASS</th>
-                                    <th>TYPE</th>
-                                    <th>DATE</th>
-                                    <th>START TIME</th>
-                                    <th>END TIME</th>
-                                    <th>STATUS</th>
-                                    <th class="w-1"></th>
+                                    <th>CATEGORY ID</th>
+                                    <th>QUESTION</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                         </table>
                     </div>
-                    <div id="past" class="tab-pane fade" role="tabpanel">
-                        <div class="col-12 alert alert-info">
-                            <i class="ik ik-info"></i> Showing schedules after: {{ now()->format('M j, Y') }}.
+                    <div id="categories" class="tab-pane fade" role="tabpanel">
+                        <div class="d-block text-right">
+                            @can('question.create')
+                            <a class="btn btn-outline-primary" data-toggle="modal" href="#mdl_create_category" type="button">
+                                <i class="ik ik-plus"></i> CREATE CATEGORY
+                            </a>
+                            @endcan
                         </div>
-                        <table id="dt_past_schedules" class="table table-hover border-bottom table-responsive" style="width: 100%;">
+                        <form id="frm_search_category" class="form-inline mb-5" x-on:submit.prevent="filter()">
+                            <label class="mr-2">
+                                Search:
+                            </label>
+                            <select x-model="status" class="form-control mr-2" data-toggle="tooltip" title="Status Filter">
+                                <option value="">All Status</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                            <span class="input-group mb-0 mr-2">
+                                <input x-model="search" type="text" class="form-control" placeholder="Search">
+                                <div class="input-group-append">
+                                    <button type="button" x-on:click="filter()" class="btn btn-light ik ik-search border border-gray-800" data-toggle="tooltip" title="Search"></button>
+                                </div>
+                            </span>
+                            <button x-show.transition="isClean()" type="button" class="btn text-red ik ik-x rounded-0" x-on:click="reset()" data-toggle="tooltip" title="Reset" style="padding-bottom: 26px"></button>
+                        </form>
+                        <table id="dt_categories" class="table table-hover border-bottom table-responsive" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>SCHOOL YEAR</th>
-                                    <th>SEMESTER</th>
-                                    <th>GRADE</th>
-                                    <th>CLASS</th>
-                                    <th>TYPE</th>
-                                    <th>DATE</th>
-                                    <th>START TIME</th>
-                                    <th>END TIME</th>
-                                    <th class="w-1">STATUS</th>
+                                    <th>CATEGORY</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                         </table>
@@ -109,26 +116,53 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="mdl_create" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+<!-- Modals -->
+<!-- Questions -->
+<div class="modal fade" id="mdl_create_question" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content border-0">
             <div class="modal-header">
-                <h6 class="modal-title">Create Schedule</h6>
+                <h6 class="modal-title">Create Question</h6>
             </div>
             <div class="modal-body">
-                @livewire('admin.evaluation.schedule.create')
+                @livewire('admin.evaluation.questionnaire.question.create')
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="mdl_edit" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" id="mdl_edit_question" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content border-0">
             <div class="modal-header">
-                <h6 class="modal-title">Edit Schedule</h6>
+                <h6 class="modal-title">Edit Question</h6>
             </div>
             <div class="modal-body">
-                @livewire('admin.evaluation.schedule.edit')
+                @livewire('admin.evaluation.questionnaire.question.edit')
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Category -->
+<div class="modal fade" id="mdl_create_category" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-header">
+                <h6 class="modal-title">Create Category</h6>
+            </div>
+            <div class="modal-body">
+                @livewire('admin.evaluation.questionnaire.category.create')
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="mdl_edit_category" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-header">
+                <h6 class="modal-title">Edit Category</h6>
+            </div>
+            <div class="modal-body">
+                @livewire('admin.evaluation.questionnaire.category.edit')
             </div>
         </div>
     </div>
@@ -137,11 +171,11 @@
 
 @push('scripts')
 <script>
-    let dt_schedules;
-    let dt_past_schedules;
+    let dt_questions;
+    let dt_categories;
     let frm_search = {};
 
-    function searchFilter() {
+    function searchFilterQuestions() {
         return {
             search: '',
             column: 1,
@@ -172,88 +206,45 @@
         }
     }
 
+    function searchFilterCategories() {
+        //
+    }
+
     $(function () {
-        dt_schedules = $('#dt_schedules').DataTable({
+        dt_questions = $('#dt_questions').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
-                url: '{{ route("admin.evaluation.schedule.table") }}',
+                url: '{{ route("admin.evaluation.questionnaire.table_questions") }}',
                 method: 'post',
                 data: function (d) {
                     d.form = frm_search;
                 }
             },
-            order: [
-                [0, 'desc'],
-            ],
             columns: [{
                 data: 'id',
                 name: 'id',
-                className: 'dt-body-right',
+                className: 'dt-body-right w-1 text-nowrap',
             }, {
-                data: 'readable_school_year',
-                name: 'school_year'
+                data: 'category_id',
+                name: 'category_id',
+                className: 'dt-body-right w-1 text-nowrap',
             }, {
-                data: 'readable_semester',
-                name: 'semester',
-            }, {
-                data: 'section.grade',
-                name: 'section.grade',
-                className: 'dt-body-right',
-                orderable: false,
-            }, {
-                data: 'section.name',
-                name: 'section.name',
-                orderable: false,
-            }, {
-                data: 'whole_day',
-                name: 'whole_day',
-                render: function (whole_day) {
-                    return !whole_day ? 'TIMED' : 'OPEN'
-                }
-            }, {
-                data: 'date',
-                name: 'date',
-            }, {
-                data: 'start',
-                name: 'start',
-                render: function (time, t, row) {
-                    if (row.whole_day) {
-                        return 'WHOLE DAY'
-                    }
-
-                    return time;
-                }
-            }, {
-                data: 'end',
-                name: 'end',
-                render: function (time, t, row) {
-                    if (row.whole_day) {
-                        return 'WHOLE DAY'
-                    }
-
-                    return time;
-                }
-            }, {
-                data: 'html_status',
-                name: 'html_status',
-                className: 'dt-btn dt-body-left',
+                data: 'question',
+                name: 'question',
             }, {
                 data: 'btn',
                 name: 'btn',
-                className: 'dt-btn',
                 orderable: false,
+                className: 'dt-body-right dt-btn',
             }]
         });
 
-        dt_past_schedules = $('#dt_past_schedules').DataTable({
+        dt_categories = $('#dt_categories').DataTable({
             processing: true,
             serverSide: true,
-            order: [
-                [0, 'desc'],
-            ],
             ajax: {
-                url: '{{ route("admin.evaluation.schedule.table-past") }}',
+                url: '{{ route("admin.evaluation.questionnaire.table_categories") }}',
                 method: 'post',
                 data: function (d) {
                     d.form = frm_search;
@@ -262,60 +253,16 @@
             columns: [{
                 data: 'id',
                 name: 'id',
-                className: 'dt-body-right',
+                className: 'dt-body-right w-1 text-nowrap',
             }, {
-                data: 'readable_school_year',
-                name: 'school_year'
+                data: 'category',
+                name: 'category',
             }, {
-                data: 'readable_semester',
-                name: 'semester',
-            }, {
-                data: 'section.grade',
-                name: 'section.grade',
-                className: 'dt-body-right',
+                data: 'btn',
+                name: 'btn',
                 orderable: false,
-            }, {
-                data: 'section.name',
-                name: 'section.name',
-                orderable: false,
-            }, {
-                data: 'whole_day',
-                name: 'whole_day',
-                render: function (whole_day) {
-                    return !whole_day ? 'TIMED' : 'OPEN'
-                }
-            }, {
-                data: 'date',
-                name: 'date',
-            }, {
-                data: 'start',
-                name: 'start',
-                render: function (time, t, row) {
-                    if (row.whole_day) {
-                        return 'WHOLE DAY'
-                    }
-
-                    return time;
-                }
-            }, {
-                data: 'end',
-                name: 'end',
-                render: function (time, t, row) {
-                    if (row.whole_day) {
-                        return 'WHOLE DAY'
-                    }
-
-                    return time;
-                }
-            }, {
-                data: 'html_status',
-                name: 'html_status',
-                className: 'dt-btn dt-body-left w-1',
+                className: 'dt-body-right dt-btn',
             }]
-        });
-
-        Livewire.on('tableRefresh', () => {
-            dt_schedules.ajax.reload(null, false);
         });
 
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -324,7 +271,7 @@
         });
 
         $($.fn.dataTable.tables(true)).DataTable()
-                .columns.adjust();
+            .columns.adjust();
     });
 
 </script>

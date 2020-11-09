@@ -37,4 +37,32 @@ trait LivewireForm
 
         return $validatedData;
     }
+
+    public function emitError($exception)
+    {
+        $this->reset();
+        $this->resetErrorBag();
+        $this->emit('errorMsg', ['title' => 'Transaction Error', 'message' => $exception->getMessage()]);
+    }
+
+    public function toast($message, $type = 'success')
+    {
+        $toastType = [
+            'success' => 'success',
+            'info' => 'info',
+            'error' => 'error',
+            'warning' => 'warning',
+            1 => 'success',
+            2 => 'info',
+            3 => 'warning',
+            0 => 'error',
+        ][$type] ?? 'warning';
+
+        $this->emit('closeDialogBox');
+
+        $this->emit('toast', [
+            'type' => $toastType,
+            'message' => $message,
+        ]);
+    }
 }

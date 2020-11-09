@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\EloquentSortable\SortableTrait;
 
 /**
  * App\Models\Question
@@ -30,7 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Question extends Model
 {
-    use HasFactory;
+    use HasFactory, SortableTrait;
 
     protected $table = 'eval_questions';
 
@@ -38,6 +39,6 @@ class Question extends Model
 
     public function category()
     {
-        return $this->belongsTo(QuestionCategory::class, 'id', 'category_id');
+        return $this->belongsTo(QuestionCategory::class, 'category_id', 'id');
     }
 }

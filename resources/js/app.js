@@ -13,6 +13,7 @@ try {
     require('datatables.net-bs4');
     require('datatables.net-plugins/pagination/input');
     require('select2');
+    require('jquery-toast-plugin');
     require('./plugins/jquery.numeric');
     require('./plugins/themekit');
 
