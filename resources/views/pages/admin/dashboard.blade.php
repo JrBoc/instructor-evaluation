@@ -47,11 +47,11 @@
             <div class="widget-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="state">
-                        <h6>Title 2</h6>
-                        <h2>Subtitle 2</h2>
+                        <h6>Students</h6>
+                        <h2>{{ $students }}</h2>
                     </div>
                     <div class="icon">
-                        <i class="ik ik-shopping-bag"></i>
+                        <i class="ik ik-users"></i>
                     </div>
                 </div>
             </div>
@@ -65,11 +65,11 @@
             <div class="widget-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="state">
-                        <h6>Title 3</h6>
-                        <h2>Subtitle 3</h2>
+                        <h6>Classes</h6>
+                        <h2>{{ $sections }}</h2>
                     </div>
                     <div class="icon">
-                        <i class="ik ik-package"></i>
+                        <i class="ik ik-clipboard"></i>
                     </div>
                 </div>
             </div>
@@ -83,11 +83,11 @@
             <div class="widget-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="state">
-                        <h6>Title 4</h6>
-                        <h2>Subtitle 4</h2>
+                        <h6>Evaluations</h6>
+                        <h2>{{ $instructors }}</h2>
                     </div>
                     <div class="icon">
-                        <i class="ik ik-heart-on"></i>
+                        <i class="ik ik-calendar"></i>
                     </div>
                 </div>
             </div>
