@@ -28,6 +28,9 @@ use Spatie\EloquentSortable\SortableTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereQuestion($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $group_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Question ordered($direction = 'asc')
+ * @method static \Illuminate\Database\Eloquent\Builder|Question whereGroupId($value)
  */
 class Question extends Model
 {
@@ -40,5 +43,16 @@ class Question extends Model
     public function category()
     {
         return $this->belongsTo(QuestionCategory::class, 'category_id', 'id');
+    }
+
+    public function generateOrderId()
+    {
+        $lastQuestion = $this->query()->where('group_id', $this->group_id)->latest()->first();
+
+        if (!$lastQuestion) {
+            return 1;
+        } else {
+            return $lastQuestion->order_id + 1;
+        }
     }
 }

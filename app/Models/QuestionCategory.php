@@ -24,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|QuestionCategory whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|QuestionCategory whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Question[] $questions
+ * @property-read int|null $questions_count
  */
 class QuestionCategory extends Model
 {
@@ -33,7 +35,7 @@ class QuestionCategory extends Model
 
     protected $guarded = [];
 
-    public function question()
+    public function questions()
     {
         return $this->hasMany(Question::class, 'category_id', 'id');
     }

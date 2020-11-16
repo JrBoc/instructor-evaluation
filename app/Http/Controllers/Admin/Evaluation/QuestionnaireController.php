@@ -17,16 +17,21 @@ class QuestionnaireController extends Controller
     public function tableQuestions(Request $request)
     {
         $form = [
-            'status' => $request->form['status'] ?? null,
             'search' => $request->form['search'] ?? null,
             'column' => $request->form['column'] ?? null,
+        ];
+
+        $columns = [
+            1 => 'id',
+            2 => 'question',
         ];
 
         $questions = Question::query()->with('category');
 
         return datatables()
             ->eloquent($questions)
-            ->addColumn('btn', function($question) {
+            ->searchFilter($columns, $form)
+            ->addColumn('btn', function ($question) {
                 $btn = '<button data-toggle="tooltip" title="View" type="button" class="btn btn-icon btn-view mr-2 border-dark" value="' . $question->id . '"><i class="ik ik-eye"></i></button>';
 
                 if (auth()->user()->can('class.edit')) {
@@ -46,29 +51,34 @@ class QuestionnaireController extends Controller
     public function tableCategories(Request $request)
     {
         $form = [
-            'status' => $request->form['status'] ?? null,
             'search' => $request->form['search'] ?? null,
             'column' => $request->form['column'] ?? null,
+        ];
+
+        $columns = [
+            1 => 'id',
+            2 => 'category',
         ];
 
         $categories = QuestionCategory::query();
 
         return datatables()
-        ->eloquent($categories)
-        ->addColumn('btn', function($category) {
-            $btn = '<button data-toggle="tooltip" title="View" type="button" class="btn btn-icon btn-view mr-2 border-dark" value="' . $category->id . '"><i class="ik ik-eye"></i></button>';
+            ->eloquent($categories)
+            ->searchFilter($columns, $form)
+            ->addColumn('btn', function ($category) {
+                $btn = '<button data-toggle="tooltip" title="View" type="button" class="btn btn-icon btn-view mr-2 border-dark" value="' . $category->id . '"><i class="ik ik-eye"></i></button>';
 
-            if (auth()->user()->can('class.edit')) {
-                $btn .= '<button data-toggle="tooltip" title="Edit" type="button" class="btn btn-outline-primary btn-icon btn-edit mr-2" value="' . $category->id . '"><i class="ik ik-edit"></i></button>';
-            }
+                if (auth()->user()->can('class.edit')) {
+                    $btn .= '<button data-toggle="tooltip" title="Edit" type="button" class="btn btn-outline-primary btn-icon btn-edit mr-2" value="' . $category->id . '"><i class="ik ik-edit"></i></button>';
+                }
 
-            if (auth()->user()->can('class.delete')) {
-                $btn .= '<button data-toggle="tooltip" title="Delete" type="button" class="btn btn-outline-danger btn-icon btn-delete" value="' . $category->id . '"><i class="ik ik-trash"></i></button>';
-            }
+                if (auth()->user()->can('class.delete')) {
+                    $btn .= '<button data-toggle="tooltip" title="Delete" type="button" class="btn btn-outline-danger btn-icon btn-delete" value="' . $category->id . '"><i class="ik ik-trash"></i></button>';
+                }
 
-            return $btn;
-        })
-        ->rawColumns(['btn'])
-        ->toJson();
+                return $btn;
+            })
+            ->rawColumns(['btn'])
+            ->toJson();
     }
 }
