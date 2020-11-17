@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\EloquentSortable\SortableTrait;
 
 /**
  * App\Models\Question
@@ -34,7 +33,7 @@ use Spatie\EloquentSortable\SortableTrait;
  */
 class Question extends Model
 {
-    use HasFactory, SortableTrait;
+    use HasFactory;
 
     protected $table = 'eval_questions';
 

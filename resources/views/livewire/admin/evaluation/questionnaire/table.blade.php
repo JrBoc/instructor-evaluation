@@ -1,4 +1,7 @@
 <div class="dataTables_wrapper dt-bootstrap4 no-footer">
+    @php
+    $item_id = 1;
+    @endphp
     <div class="row">
         <div class="col-sm-12">
             <table id="dt_questions" class="table table-hover dataTable border-bottom table-responsive">
@@ -11,7 +14,11 @@
                 <tbody>
                     @forelse($groups as $group)
                     <tr>
-                        <td colspan="2">{{ $group->name }}</td>
+                        <td colspan="2">
+                            <strong>
+                                {{ $group->name }}
+                            </strong>
+                        </td>
                         <td class="w-1 text-nowrap text-center">
                             <button data-toggle="tooltip" data-original-title="Edit" type="button" class="btn btn-outline-primary btn-icon btn-edit-group" value="{{ $group->id }}"><i class="ik ik-edit"></i></button>
                             <button data-toggle="tooltip" data-original-title="Delete" type="button" class="btn btn-outline-danger btn-icon btn-delete-group" value="{{ $group->id }}"><i class="ik ik-trash"></i></button>
@@ -27,7 +34,7 @@
                     @forelse($group->questions as $question)
                     <tr>
                         <td style="width: 50px"></td>
-                        <td>{{ $question->question }}</td>
+                        <td>{{ $item_id . '. ' . $question->question }}</td>
                         <td class="w-1 text-nowrap text-center">
                             <button data-toggle="tooltip" data-original-title="Edit" type="button" class="btn btn-outline-primary btn-icon btn-edit-question" value="{{ $question->id }}"><i class="ik ik-edit"></i></button>
                             <button data-toggle="tooltip" data-original-title="Delete" type="button" class="btn btn-outline-danger btn-icon btn-delete-question" value="{{ $question->id }}"><i class="ik ik-trash"></i></button>
@@ -40,6 +47,9 @@
                             @endif
                         </td>
                     </tr>
+                    @php
+                        $item_id += 1;
+                    @endphp
                     @empty
                     <tr>
                         <td class="text-center" colspan="3">

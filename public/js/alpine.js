@@ -2008,7 +2008,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\laragon\www\tes\resources\js\alpine.js */"./resources/js/alpine.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\instructor-evaluation\resources\js\alpine.js */"./resources/js/alpine.js");
 
 
 /***/ })
