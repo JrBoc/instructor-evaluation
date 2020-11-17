@@ -96,6 +96,7 @@
                 <h6 class="modal-title">Edit Group</h6>
             </div>
             <div class="modal-body">
+                @livewire('admin.evaluation.questionnaire.group.edit')
             </div>
         </div>
     </div>

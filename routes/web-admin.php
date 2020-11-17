@@ -41,8 +41,6 @@ Route::middleware('auth')->group(function() {
         Route::post('/schedules/table-past-schedules', [Admin\Evaluation\ScheduleController::class, 'tablePastSchedule'])->name('schedule.table-past');
 
         Route::get('/questionnaire', [Admin\Evaluation\QuestionnaireController::class, 'index'])->name('questionnaire.index');
-        Route::post('/questionnaire/table/questions', [Admin\Evaluation\QuestionnaireController::class, 'tableQuestions'])->name('questionnaire.table_questions');
-        Route::post('/questionnaire/table/categories', [Admin\Evaluation\QuestionnaireController::class, 'tableCategories'])->name('questionnaire.table_categories');
     });
 });
 

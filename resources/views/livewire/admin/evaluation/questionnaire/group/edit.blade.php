@@ -1,10 +1,10 @@
-<div class="row" x-data="createCategory()">
+<div class="row" x-data="editGroup()">
     <div class="col-12">
-        <form action="#" x-on:submit.prevent="store()">
+        <form action="#" x-on:submit.prevent="update()">
             <div class="form-group">
-                <label>Category: <span class="text-red">*</span></label>
-                <input wire:model.defer="category" type="text" class="form-control @error('category') is-invalid @enderror" placeholder="Category">
-                @include('inc.invalid-feedback', ['name' => 'category'])
+                <label>Name: <span class="text-red">*</span></label>
+                <input wire:model.defer="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Name">
+                @include('inc.invalid-feedback', ['name' => 'name'])
             </div>
             <div class="d-flex justify-content-between">
                 <button type="submit" class="btn btn-outline-primary" style="width: 49%">SUBMIT</button>
@@ -16,12 +16,11 @@
 
 @push('after_scripts')
 <script>
-    function edit() {
+    function editGroup() {
         return {
-            editable: @entangle('editable'),
             update() {
                 SwalConfirm.fire({
-                    text: 'Are you sure you want to update this category?',
+                    text: 'Are you sure you want to update this group?',
                     preConfirm: function (choice) {
                         if (choice) {
                             @this.call('update');
@@ -35,27 +34,27 @@
                 });
             },
             clear() {
-                $('#mdl_edit').modal('hide');
+                $('#mdl_edit_group').modal('hide');
             }
         }
     }
 
-  $(function () {
-        $('#mdl_edit_category').on('hide.bs.modal', function () {
+    $(function () {
+        $('#mdl_edit_group').on('hide.bs.modal', function () {
             @this.call('clear');
         });
 
-        $('#dt_categories').on('click', '.btn-edit', function () {
+        $('#dt_questions').on('click', '.btn-edit-group', function () {
             SwalLoading.fire();
 
             @this.call('get', $(this).val(), true);
         });
 
-        $('#dt_categories').on('click', '.btn-delete', function () {
+        $('#dt_questions').on('click', '.btn-delete-group', function () {
             let id = $(this).val();
 
             SwalConfirm.fire({
-                text: 'Are you sure you want to delete this Category and the questions within?',
+                text: 'Are you sure you want to delete this Group and the Questions within?',
                 preConfirm: function (choice) {
                     if (choice) {
                         @this.call('destroy', id);
@@ -69,5 +68,6 @@
             });
         });
     });
+
 </script>
 @endpush

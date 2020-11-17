@@ -40,6 +40,10 @@ class QuestionGroup extends Model
         static::creating(function ($model) {
             $model->order_id = $model->getNewOrderId();
         });
+
+        static::deleting(function($model) {
+            Question::query()->where('group_id', $model->id)->delete();
+        });
     }
 
     public function questions()

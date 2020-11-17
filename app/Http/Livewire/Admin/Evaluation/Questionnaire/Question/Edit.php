@@ -11,7 +11,7 @@ class Edit extends Component
 {
     use LivewireForm;
 
-    public $questionModel;
+    public $model;
     public $question = '';
     public $group = '';
 
@@ -37,7 +37,7 @@ class Edit extends Component
             'question' => 'required',
         ]);
 
-        $this->questionModel->update([
+        $this->model->update([
             'group_id' => $this->group,
             'question' => $this->question,
         ]);
@@ -50,7 +50,7 @@ class Edit extends Component
 
     public function get(Question $question)
     {
-        $this->questionModel = $question;
+        $this->model = $question;
 
         $this->question = $question->question;
         $this->group = $question->group_id;

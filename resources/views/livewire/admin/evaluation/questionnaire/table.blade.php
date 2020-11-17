@@ -13,8 +13,15 @@
                     <tr>
                         <td colspan="2">{{ $group->name }}</td>
                         <td class="w-1 text-nowrap text-center">
-                            <button data-toggle="tooltip" data-original-title="Edit" type="button" class="btn btn-outline-primary btn-icon btn-edit mr-1" value="{{ $group->id }}"><i class="ik ik-edit"></i></button>
-                            <button data-toggle="tooltip" data-original-title="Delete" type="button" class="btn btn-outline-danger btn-icon btn-delete" value="{{ $group->id }}"><i class="ik ik-trash"></i></button>
+                            <button data-toggle="tooltip" data-original-title="Edit" type="button" class="btn btn-outline-primary btn-icon btn-edit-group" value="{{ $group->id }}"><i class="ik ik-edit"></i></button>
+                            <button data-toggle="tooltip" data-original-title="Delete" type="button" class="btn btn-outline-danger btn-icon btn-delete-group" value="{{ $group->id }}"><i class="ik ik-trash"></i></button>
+                            <br>
+                            @if(!$loop->first)
+                            <button data-toggle="tooltip" data-original-title="Move Up" wire:click="moveGroupUp({{ $group->id }})" type="button" class="btn btn-icon btn-view mt-1 border-dark"><i class="ik ik-arrow-up"></i></button>
+                            @endif
+                            @if(!$loop->last)
+                            <button data-toggle="tooltip" data-original-title="Move Down" wire:click="moveGroupDown({{ $group->id }})" type="button" class="btn btn-icon btn-view mt-1 border-dark"><i class="ik ik-arrow-down"></i></button>
+                            @endif
                         </td>
                     </tr>
                     @forelse($group->questions as $question)
@@ -22,14 +29,14 @@
                         <td style="width: 50px"></td>
                         <td>{{ $question->question }}</td>
                         <td class="w-1 text-nowrap text-center">
-                            <button data-toggle="tooltip" data-original-title="Edit" type="button" class="btn btn-outline-primary btn-icon btn-edit-question mr-1" value="{{ $question->id }}"><i class="ik ik-edit"></i></button>
+                            <button data-toggle="tooltip" data-original-title="Edit" type="button" class="btn btn-outline-primary btn-icon btn-edit-question" value="{{ $question->id }}"><i class="ik ik-edit"></i></button>
                             <button data-toggle="tooltip" data-original-title="Delete" type="button" class="btn btn-outline-danger btn-icon btn-delete-question" value="{{ $question->id }}"><i class="ik ik-trash"></i></button>
                             <br>
                             @if(!$loop->first)
-                            <button data-toggle="tooltip" data-original-title="Move Up" wire:click="decrement({{$question->id}})" type="button" class="btn btn-icon btn-view mr-1 mt-2 border-dark" value="{{ $question->id }}"><i class="ik ik-arrow-up"></i></button>
+                            <button data-toggle="tooltip" data-original-title="Move Up" wire:click="moveQuestionUp({{ $question->id }})" type="button" class="btn btn-icon btn-view mt-1 border-dark"><i class="ik ik-arrow-up"></i></button>
                             @endif
                             @if(!$loop->last)
-                            <button data-toggle="tooltip" data-original-title="Move Down" wire:click="increment({{$question->id}})" type="button" class="btn btn-icon btn-view mr-1 mt-2 border-dark" value="{{ $question->id }}"><i class="ik ik-arrow-down"></i></button>
+                            <button data-toggle="tooltip" data-original-title="Move Down" wire:click="moveQuestionDown({{ $question->id }})" type="button" class="btn btn-icon btn-view mt-1 border-dark"><i class="ik ik-arrow-down"></i></button>
                             @endif
                         </td>
                     </tr>
@@ -42,13 +49,17 @@
                     @endforelse
                     @empty
                     <tr>
-                        <td class="text-center" colspan="3">
+                        <td class="text-center" colspan="2">
                             No Registered Groups. Please Create a group.
                         </td>
+                        <td class="w-1"></td>
                     </tr>
                     @endforelse
                 </tbody>
             </table>
+            <div id="dt_questions_processing" class="dataTables_processing card" wire:loading>
+                <i class="fas fa-spinner fa-pulse"></i> Please wait...
+            </div>
         </div>
         <div class="col-sm-12 col-md-5">
             <div class="dataTables_info" id="dt_students_info" role="status" aria-live="polite">Showing {{ $totalQuestions ? 1 : 0 }} to {{ $totalQuestions }} of {{ $totalQuestions }} entries</div>
