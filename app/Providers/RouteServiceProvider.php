@@ -18,6 +18,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const ADMIN_DASHBOARD = '/admin/dashboard';
+    public const STUDENT_DASHBOARD = '/admin/dashboard';
 
     /**
      * The controller namespace for the application.
@@ -38,9 +39,10 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            Route::prefix('api')
-                ->middleware('api')
-                ->group(base_path('routes/api.php'));
+            Route::prefix('student')
+                ->name('student.')
+                ->middleware('web')
+                ->group(base_path('routes/web-student.php'));
 
             Route::prefix('admin')
                 ->name('admin.')
@@ -59,8 +61,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function configureRateLimiting()
     {
-        RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60);
-        });
+        //
     }
 }
