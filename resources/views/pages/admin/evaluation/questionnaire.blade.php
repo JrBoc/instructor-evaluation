@@ -38,7 +38,7 @@
                     </a>
                 </div>
                 <div class="d-block mt-5">
-                    <a class="btn btn-outline-primary" style="width: 200px" data-toggle="modal" href="#mdl_create_category" type="button">
+                    <a class="btn btn-outline-primary" style="width: 200px" data-toggle="modal" href="#mdl_create_group" type="button">
                         <i class="ik ik-plus"></i> CREATE GROUP
                     </a>
                 </div>
@@ -76,23 +76,24 @@
         </div>
     </div>
 </div>
-<!-- Category -->
-<div class="modal fade" id="mdl_create_category" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+<!-- Group -->
+<div class="modal fade" id="mdl_create_group" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content border-0">
             <div class="modal-header">
-                <h6 class="modal-title">Create Category</h6>
+                <h6 class="modal-title">Create Group</h6>
             </div>
             <div class="modal-body">
+                @livewire('admin.evaluation.questionnaire.group.create')
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="mdl_edit_category" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" id="mdl_edit_group" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content border-0">
             <div class="modal-header">
-                <h6 class="modal-title">Edit Category</h6>
+                <h6 class="modal-title">Edit Group</h6>
             </div>
             <div class="modal-body">
             </div>

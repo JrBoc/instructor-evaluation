@@ -31,7 +31,6 @@ class Create extends Component
         Question::create([
             'group_id' => $this->group,
             'question' => $this->question,
-            'order_id' => $this->getLastOrderId(),
         ]);
 
         $this->emit('closeModal', ['id' => '#mdl_create_question']);
@@ -44,10 +43,5 @@ class Create extends Component
     {
         $this->reset();
         $this->resetErrorBag();
-    }
-
-    private function getLastOrderId()
-    {
-        return optional(Question::query()->where('group_id', $this->group)->orderBy('order_id')->first())->order_id + 1 ?? 1;
     }
 }

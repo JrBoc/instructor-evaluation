@@ -50,14 +50,15 @@
                 </tbody>
             </table>
         </div>
+        <div class="col-sm-12 col-md-5">
+            <div class="dataTables_info" id="dt_students_info" role="status" aria-live="polite">Showing {{ $totalQuestions ? 1 : 0 }} to {{ $totalQuestions }} of {{ $totalQuestions }} entries</div>
+        </div>
     </div>
 </div>
 
 @push('after_scripts')
 <script>
     $(function () {
-
-
         $(document).on('reRenderQuestionnaire', function () {
             @this.call('reRender');
         });

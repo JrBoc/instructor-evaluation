@@ -1,10 +1,10 @@
-<div class="row" x-data="createCategory()">
+<div class="row" x-data="createGroup()">
     <div class="col-12">
         <form action="#" x-on:submit.prevent="store()">
             <div class="form-group">
-                <label>Category: <span class="text-red">*</span></label>
-                <input wire:model.defer="category" type="text" class="form-control @error('category') is-invalid @enderror" placeholder="Category">
-                @include('inc.invalid-feedback', ['name' => 'category'])
+                <label>Name: <span class="text-red">*</span></label>
+                <input wire:model.defer="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Name">
+                @include('inc.invalid-feedback', ['name' => 'name'])
             </div>
             <div class="d-flex justify-content-between">
                 <button type="submit" class="btn btn-outline-primary" style="width: 49%">SUBMIT</button>
@@ -16,11 +16,11 @@
 
 @push('after_scripts')
 <script>
-    function createCategory() {
+    function createGroup() {
         return {
             store() {
                 SwalConfirm.fire({
-                    text: 'Are you sure you want to create a new category?',
+                    text: 'Are you sure you want to create a new group?',
                     preConfirm: function (choice) {
                         if (choice) {
                             @this.call('store');
@@ -34,13 +34,13 @@
                 });
             },
             clear() {
-                $('#mdl_create').modal('hide');
+                $('#mdl_create_group').modal('hide');
             }
         }
     }
 
     $(function () {
-        $('#mdl_create_category').on('hide.bs.modal', function () {
+        $('#mdl_create_group').on('hide.bs.modal', function () {
             @this.call('clear');
         });
     });

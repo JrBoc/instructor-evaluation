@@ -33,8 +33,22 @@ class QuestionGroup extends Model
 
     protected $guarded = [];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->order_id = $model->getNewOrderId();
+        });
+    }
+
     public function questions()
     {
         return $this->hasMany(Question::class, 'group_id', 'id')->orderBy('order_id', 'asc');
+    }
+
+    public function getNewOrderId()
+    {
+        return optional($this->query()->latest()->first())->order_id + 1 ?? 1;
     }
 }

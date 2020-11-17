@@ -40,19 +40,17 @@ class Question extends Model
 
     protected $guarded = [];
 
-    public function category()
+    protected static function boot()
     {
-        return $this->belongsTo(QuestionCategory::class, 'category_id', 'id');
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->order_id = $model->getNewOrderId($model->group_id);
+        });
     }
 
-    public function generateOrderId()
+    public function getNewOrderId($group_id)
     {
-        $lastQuestion = $this->query()->where('group_id', $this->group_id)->latest()->first();
-
-        if (!$lastQuestion) {
-            return 1;
-        } else {
-            return $lastQuestion->order_id + 1;
-        }
+        return optional($this->query()->where('group_id', $group_id)->latest()->first())->order_id + 1 ?? 1;
     }
 }
